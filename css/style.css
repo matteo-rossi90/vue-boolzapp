@@ -5,3 +5,180 @@
     padding: 0;
     font-family:Arial, Helvetica, sans-serif;
 }
+
+/* regole principali */
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+.container-flex {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.container-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container-around {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+ul {
+    display: flex;
+    list-style-type: none;
+}
+
+ul li {
+    padding: 15px 10px;
+}
+
+.icon-bar{
+    padding: 0 10px;
+    color: grey;
+}
+
+/* regole per il contenitore principale e i relativi blocchi */
+
+#wrap-container {
+    position: relative;
+}
+
+#top-block {
+    background-color: #009688;
+    height: 100px;
+    width: 100%;
+}
+
+#bottom-block {
+    background-color: #bcbcbc;
+    height: calc(100% - 100px);
+    width: 100%;
+}
+
+/* regole per il blocco centrale relativo all'applicazione */
+
+#bool-application {
+    width: 80%;
+    height: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+    display: flex;
+}
+
+/* regole generali per le barre in alto */
+.bar {
+    height: 50px;
+    width: 100%;
+    background-color: #EAEAEA;
+}
+
+/* PARTE LATERALE */
+/* barra laterale */
+#sidebar {
+    height: 100%;
+    width: 400px;
+    background-color: #FFFFFF;
+    border: 1px solid gainsboro;
+}
+
+/* barra in alto della barra laterale */
+.image-box {
+    height: 40px;
+    width: 40px;
+    padding: 5px;
+}
+
+.image-box img {
+    max-width: 100%;
+    border-radius: 100%;
+}
+
+.circle {
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    background-color: white;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fa-bell-slash {
+    font-size: 20px;
+    padding: 5px;
+    color: #8EDAFC;
+}
+
+.box-text {
+    display: flex;
+    flex-direction: column;
+}
+
+/* box ricevi notifiche */
+#notification {
+    height: 60px;
+    background-color: #8EDAFC;
+}
+
+/* barra di ricerca per il filtro nella barra laterale */
+#search-bar {
+    height: 40px;
+    background-color: #EAEAEA;
+}
+
+/* box contatti */
+#list-contacts {
+    height: calc(100% - 160px);
+    border: 1px dashed black;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+/* PARTE CENTRALE */
+/* corpo dell'applicazione */
+#body-app {
+    height: 100%;
+    width: calc(100% - 400px);
+    background-image: url('../img/background_chat.png');
+    background-size: repeat;
+    flex-shrink: 0;
+}
+
+/* barra in basso */
+#message-bar {
+    flex: 1;
+    padding: 0 10px;
+}
+
+#message-bar input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.fa-face-smile,
+.fa-microphone{
+    padding: 0 30px;
+    font-size: 20px;
+    color: grey;
+}
+
+/* box dei messaggi */
+#box-message {
+    height: calc(100% - 100px);
+    width: 100%;
+    overflow-y: auto;
+}
