@@ -19,12 +19,12 @@
     align-items: center;
 }
 
-ul {
+.bar ul {
     display: flex;
     list-style-type: none;
 }
 
-ul li {
+.bar ul li {
     padding: 15px 10px;
 }
 
@@ -154,7 +154,9 @@ ul li {
     flex-shrink: 0;
 }
 
-.contact{
+.contact li{
+    display: flex;
+    align-items:center;
     border-bottom: 1px solid gainsboro;
 }
 
@@ -169,7 +171,18 @@ ul li {
     padding: 8px;
 }
 
+/* proprietà che seleziona il contatto attivo, importante per Vue */
+.active{
+    display: flex;
+    background-color:#dcdcdc;
+}
+
 /* PARTE CENTRALE */
+/* proprietà che seleziona l'elemento */
+.selected{
+    display: inline-block;
+}
+
 /* corpo dell'applicazione */
 #body-app {
     height: 100%;

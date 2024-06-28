@@ -84,78 +84,18 @@
 
                     <!-- box che ospita la lista dei contatti -->
                     <div id="list-contacts">
-                        <div class="contact container-flex">
-                            <div class="box-contact">
-                                <img src="img/user-avatar1.png" alt="contact1">
-                            </div>
-                            <div class="box-text">
-                                <h5>Michele</h5>
-                                <small>Ultimo messaggio inviato</small>
-                            </div>
-                        </div>
-                        <div class="contact container-flex">
-                            <div class="box-contact">
-                                <img src="img/user-avatar3.png" alt="contact1">
-                            </div>
-                            <div class="box-text">
-                                <h5>Fabio</h5>
-                                <small>Ultimo messaggio inviato</small>
-                            </div>
-                        </div>
-                        <div class="contact container-flex">
-                            <div class="box-contact">
-                                <img src="img/user-avatar4.png" alt="contact1">
-                            </div>
-                            <div class="box-text">
-                                <h5>Samuele</h5>
-                                <small>Ultimo messaggio inviato</small>
-                            </div>
-                        </div>
-                        <div class="contact container-flex">
-                            <div class="box-contact">
-                                <img src="img/user-avatar5.png" alt="contact1">
-                            </div>
-                            <div class="box-text">
-                                <h5>Alessandro B.</h5>
-                                <small>Ultimo messaggio inviato</small>
-                            </div>
-                        </div>
-                        <div class="contact container-flex">
-                            <div class="box-contact">
-                                <img src="img/user-avatar6.png" alt="contact1">
-                            </div>
-                            <div class="box-text">
-                                <h5>Alessandro L.</h5>
-                                <small>Ultimo messaggio inviato</small>
-                            </div>
-                        </div>
-                        <div class="contact container-flex">
-                            <div class="box-contact">
-                                <img src="img/user-avatar7.png" alt="contact1">
-                            </div>
-                            <div class="box-text">
-                                <h5>Claudia</h5>
-                                <small>Ultimo messaggio inviato</small>
-                            </div>
-                        </div>
-                        <div class="contact container-flex">
-                            <div class="box-contact">
-                                <img src="img/user-avatar8.png" alt="contact1">
-                            </div>
-                            <div class="box-text">
-                                <h5>Alessia</h5>
-                                <small>Ultimo messaggio inviato</small>
-                            </div>
-                        </div>
-                        <div class="contact container-flex">
-                            <div class="box-contact">
-                                <img src="img/user-avatar9.png" alt="contact1">
-                            </div>
-                            <div class="box-text">
-                                <h5>Clarissa</h5>
-                                <small>Ultimo messaggio inviato</small>
-                            </div>
-                        </div>
+
+                            <ul class="contact">
+                                <li v-for="(item, index) in listContacts" :key="index">
+                                    <div class="box-contact">
+                                        <img :src="item.avatar" alt="item.name">
+                                    </div>
+                                    <div class="box-text">
+                                        <h5>{{ item.name }}</h5>
+                                        <small>Ultimo messaggio inviato</small>
+                                    </div>
+                                </li>
+                            </ul>
                     </div>
                 </div>
 
