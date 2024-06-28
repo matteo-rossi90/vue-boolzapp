@@ -41,8 +41,8 @@
                     <!-- barra in alto -->
                     <div class="bar container-between">
                         <div class="image-box container-flex">
-                            <img src="img/user-avatar1.png" alt="avatar">
-                            <small>Matteo</small>
+                            <img src="img/user-avatar2.png" alt="avatar">
+                            <h5>Matteo</h5>
                         </div>
                         <div class="icon-bar">
                             <ul>
@@ -67,7 +67,7 @@
                             <i class="fa-solid fa-bell-slash"></i>
                         </div>
                         <div class="box-text">
-                            <small>Ricevi notifiche di nuovi messaggi</small>
+                            <h5>Ricevi notifiche di nuovi messaggi</h5>
                             <small>
                                 <a href="#">Attiva notifiche desktop</a>
                             </small>
@@ -75,10 +75,87 @@
                     </div>
 
                     <!-- barra di ricerca per filtrare i profili -->
-                    <div id="search-bar"></div>
+                    <div id="search-bar">
+                        <button id="btn-search">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <input type="text" placeholder="Cerca un contatto">
+                    </div>
 
                     <!-- box che ospita la lista dei contatti -->
                     <div id="list-contacts">
+                        <div class="contact container-flex">
+                            <div class="box-contact">
+                                <img src="img/user-avatar1.png" alt="contact1">
+                            </div>
+                            <div class="box-text">
+                                <h5>Michele</h5>
+                                <small>Ultimo messaggio inviato</small>
+                            </div>
+                        </div>
+                        <div class="contact container-flex">
+                            <div class="box-contact">
+                                <img src="img/user-avatar3.png" alt="contact1">
+                            </div>
+                            <div class="box-text">
+                                <h5>Fabio</h5>
+                                <small>Ultimo messaggio inviato</small>
+                            </div>
+                        </div>
+                        <div class="contact container-flex">
+                            <div class="box-contact">
+                                <img src="img/user-avatar4.png" alt="contact1">
+                            </div>
+                            <div class="box-text">
+                                <h5>Samuele</h5>
+                                <small>Ultimo messaggio inviato</small>
+                            </div>
+                        </div>
+                        <div class="contact container-flex">
+                            <div class="box-contact">
+                                <img src="img/user-avatar5.png" alt="contact1">
+                            </div>
+                            <div class="box-text">
+                                <h5>Alessandro B.</h5>
+                                <small>Ultimo messaggio inviato</small>
+                            </div>
+                        </div>
+                        <div class="contact container-flex">
+                            <div class="box-contact">
+                                <img src="img/user-avatar6.png" alt="contact1">
+                            </div>
+                            <div class="box-text">
+                                <h5>Alessandro L.</h5>
+                                <small>Ultimo messaggio inviato</small>
+                            </div>
+                        </div>
+                        <div class="contact container-flex">
+                            <div class="box-contact">
+                                <img src="img/user-avatar7.png" alt="contact1">
+                            </div>
+                            <div class="box-text">
+                                <h5>Claudia</h5>
+                                <small>Ultimo messaggio inviato</small>
+                            </div>
+                        </div>
+                        <div class="contact container-flex">
+                            <div class="box-contact">
+                                <img src="img/user-avatar8.png" alt="contact1">
+                            </div>
+                            <div class="box-text">
+                                <h5>Alessia</h5>
+                                <small>Ultimo messaggio inviato</small>
+                            </div>
+                        </div>
+                        <div class="contact container-flex">
+                            <div class="box-contact">
+                                <img src="img/user-avatar9.png" alt="contact1">
+                            </div>
+                            <div class="box-text">
+                                <h5>Clarissa</h5>
+                                <small>Ultimo messaggio inviato</small>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -87,18 +164,25 @@
                     <!-- barra in alto -->
                     <div class="bar container-between">
 
-                        <div class="image-box container-flex">
-                            <img src="img/user-avatar1.png" alt="avatar">
-                            <small>Michele</small>
+                        <div class="container-flex">
+                            <div class="image-box">
+                                <img src="img/user-avatar1.png" alt="avatar">
+                            
+                            </div>
+                            <div class="box-text">
+                                <h5>Michele</h5>
+                                <small>Ultimo accesso alle 12:00</small>
+                            </div>
+
                         </div>
 
                         <div class="icon-bar">
                             <ul>
                                 <li>
-                                    <i class="fa-solid fa-circle-notch"></i>
+                                    <i class="fa-solid fa-magnifying-glass"></i>
                                 </li>
                                 <li>
-                                    <i class="fa-solid fa-message"></i>
+                                    <i class="fa-solid fa-paperclip"></i>
                                 </li>
                                 <li>
                                     <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -110,7 +194,28 @@
 
                     <!-- contenitore messaggi -->
                     <div id="box-message">
-                        
+                        <!-- messaggi ricevuti -->
+                        <div id="received">
+                            <div class="message message-green">
+                                <p>Hai fatto questo?</p>
+                                <p class="text-message">10:30</p>
+                            </div>
+                            <div class="message message-green">
+                                <p>Hai fatto questo?</p>
+                                <p class="text-message">10:30</p>
+                            </div>
+
+                        </div>
+                        <!-- messaggi inviati -->
+                        <div id="sent">
+                            <div class="message message-white">
+                                <p>Tutto fatto</p>
+                                <p class="text-message">10:30</p>
+                            </div>
+                        </div>
+
+
+
                     </div>
 
                     <!-- barra in basso -->

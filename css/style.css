@@ -1,17 +1,9 @@
 /* regole principali */
 
-*{
-    margin: 0;
-    padding: 0;
-    font-family:Arial, Helvetica, sans-serif;
-}
-
-/* regole principali */
-
 * {
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Lato',Arial, Helvetica, sans-serif;
     box-sizing: border-box;
 }
 
@@ -25,12 +17,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.container-around {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
 }
 
 ul {
@@ -47,10 +33,17 @@ ul li {
     color: grey;
 }
 
+.box-text small {
+    color: rgb(156, 156, 156);
+    font-size: 12px;
+}
+
 /* regole per il contenitore principale e i relativi blocchi */
 
 #wrap-container {
     position: relative;
+    height: 100vh;
+    overflow: hidden;
 }
 
 #top-block {
@@ -60,20 +53,23 @@ ul li {
 }
 
 #bottom-block {
-    background-color: #bcbcbc;
-    height: calc(100% - 100px);
+    background-color: #DCDBD2;
+    height: calc(100vh - 100px);
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* regole per il blocco centrale relativo all'applicazione */
 
 #bool-application {
     width: 80%;
-    height: 600px;
+    height: calc(100vh - 50px);
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%);
+    transform: translate(-50%, -50%);
     display: flex;
 }
 
@@ -95,14 +91,20 @@ ul li {
 
 /* barra in alto della barra laterale */
 .image-box {
-    height: 40px;
-    width: 40px;
+    height: 45px;
+    width: 45px;
     padding: 5px;
 }
 
 .image-box img {
     max-width: 100%;
     border-radius: 100%;
+}
+
+/* box ricevi notifiche */
+#notification {
+    height: 60px;
+    background-color: #8EDAFC;
 }
 
 .circle {
@@ -122,29 +124,49 @@ ul li {
     color: #8EDAFC;
 }
 
-.box-text {
-    display: flex;
-    flex-direction: column;
-}
-
-/* box ricevi notifiche */
-#notification {
-    height: 60px;
-    background-color: #8EDAFC;
-}
-
 /* barra di ricerca per il filtro nella barra laterale */
+
 #search-bar {
-    height: 40px;
     background-color: #EAEAEA;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+#search-bar input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+#btn-search{
+    width: 20%;
+    padding: 5px;
+    background-color: white;
+    border: 1px solid #ccc;
+    cursor: pointer;
 }
 
 /* box contatti */
 #list-contacts {
     height: calc(100% - 160px);
-    border: 1px dashed black;
     overflow-y: auto;
     flex-shrink: 0;
+}
+
+.contact{
+    border-bottom: 1px solid gainsboro;
+}
+
+.box-contact{
+    height: 60px;
+    width: 60px;
+}
+
+.box-contact img{
+    max-width: 100%;
+    border-radius: 100%;
+    padding: 8px;
 }
 
 /* PARTE CENTRALE */
@@ -153,8 +175,44 @@ ul li {
     height: 100%;
     width: calc(100% - 400px);
     background-image: url('../img/background_chat.png');
-    background-size: repeat;
+    background-size:contain;
     flex-shrink: 0;
+}
+
+/* messaggi ricevuti e inviati */
+#box-message > div{
+    font-size: 12px;
+}
+
+.message{
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+}
+
+#received{
+    margin-top: 40px;
+    margin-right: 100px;
+    margin-left: calc(100% - 300px)
+}
+
+.message-green{
+    background-color: #D5F9BA;
+}
+
+#sent{
+    margin-left: 100px;
+    margin-right: calc(100% - 300px)
+}
+
+.message-white{
+    background-color:white;
+}
+
+.text-message{
+    text-align: right;
+    font-size: 10px;
+    color: gray;
 }
 
 /* barra in basso */
