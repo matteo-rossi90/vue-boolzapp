@@ -35,7 +35,10 @@
 
 .box-text small {
     color: rgb(156, 156, 156);
-    font-size: 12px;
+}
+
+i{
+    cursor:pointer;
 }
 
 /* regole per il contenitore principale e i relativi blocchi */
@@ -128,6 +131,7 @@
 
 #search-bar {
     background-color: #EAEAEA;
+    height: 40px;
     padding: 5px;
     display: flex;
     align-items: center;
@@ -149,15 +153,16 @@
 
 /* box contatti */
 #list-contacts {
-    height: calc(100% - 160px);
+    height: calc(100% - 150px);
     overflow-y: auto;
-    flex-shrink: 0;
 }
 
 .contact li{
     display: flex;
     align-items:center;
     border-bottom: 1px solid gainsboro;
+    cursor:pointer;
+    padding: 0 10px;
 }
 
 .box-contact{
@@ -171,17 +176,25 @@
     padding: 8px;
 }
 
+.contact li:hover{
+    background-color:rgb(239, 239, 239)
+}
+
+.list-date{
+    margin-right: calc(100% - 300px);
+}
+
+.text-sent,
+.list-date{
+    font-size: 10px;
+}
+
 /* proprietà che seleziona il contatto attivo, importante per Vue */
 .active{
-    display: flex;
     background-color:#dcdcdc;
 }
 
 /* PARTE CENTRALE */
-/* proprietà che seleziona l'elemento */
-.selected{
-    display: inline-block;
-}
 
 /* corpo dell'applicazione */
 #body-app {
@@ -201,11 +214,16 @@
     padding: 10px;
     margin: 10px 0;
     border-radius: 10px;
+    position: relative;
 }
 
-#received{
+.sent,
+.received{
     margin-top: 40px;
-    margin-right: 100px;
+}
+
+.sent{
+    margin-right: 50px;
     margin-left: calc(100% - 300px)
 }
 
@@ -213,8 +231,8 @@
     background-color: #D5F9BA;
 }
 
-#sent{
-    margin-left: 100px;
+.received{
+    margin-left: 50px;
     margin-right: calc(100% - 300px)
 }
 
@@ -223,9 +241,17 @@
 }
 
 .text-message{
+    margin: 12px 0;
+}
+
+.text-date{
     text-align: right;
-    font-size: 10px;
+    font-size: 8px;
     color: gray;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 5px;
 }
 
 /* barra in basso */

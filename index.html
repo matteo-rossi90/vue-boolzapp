@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- link CDN Luxon -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.4/luxon.min.js"
+        integrity="sha512-dUlSLLkxslGILhPdCkALwk4szPhp3xmZIKFtlUD+O9Lslq41Aksmdt5OGqpomDoT4FsCUH70jQU8ezZHI3v1RQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <!-- link Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -86,13 +91,16 @@
                     <div id="list-contacts">
 
                             <ul class="contact">
-                                <li v-for="(item, index) in listContacts" :key="index">
+                                <li v-for="(item, index) in listContacts" :key="index" @click="selectContact(index)" :class="{active : index === currentIndex}">
                                     <div class="box-contact">
-                                        <img :src="item.avatar" alt="item.name">
+                                        <img :src="item.avatar" :alt="item.name">
                                     </div>
                                     <div class="box-text">
-                                        <h5>{{ item.name }}</h5>
-                                        <small>Ultimo messaggio inviato</small>
+                                        <div class="container-between">
+                                            <h5>{{ item.name }}</h5>
+                                            <small class="list-date">12:00</small>
+                                        </div>
+                                        <small class="text-sent">Ultimo messaggio inviato</small>
                                     </div>
                                 </li>
                             </ul>
@@ -101,17 +109,18 @@
 
                 <!-- corpo principale scrollabile -->
                 <div id="body-app">
+
                     <!-- barra in alto -->
                     <div class="bar container-between">
 
                         <div class="container-flex">
                             <div class="image-box">
-                                <img src="img/user-avatar1.png" alt="avatar">
+                                <img :src="listContacts[currentIndex].avatar" :alt="listContacts[currentIndex].name">
                             
                             </div>
                             <div class="box-text">
-                                <h5>Michele</h5>
-                                <small>Ultimo accesso alle 12:00</small>
+                                <h5> {{ listContacts[currentIndex].name}} </h5>
+                                <small class="text-sent">Ultimo accesso alle 12:00</small>
                             </div>
 
                         </div>
@@ -134,26 +143,17 @@
 
                     <!-- contenitore messaggi -->
                     <div id="box-message">
-                        <!-- messaggi ricevuti -->
-                        <div id="received">
-                            <div class="message message-green">
-                                <p>Hai fatto questo?</p>
-                                <p class="text-message">10:30</p>
-                            </div>
-                            <div class="message message-green">
-                                <p>Hai fatto questo?</p>
-                                <p class="text-message">10:30</p>
+
+                        <!-- messaggi -->
+                        <div v-for="(text, index) in listContacts[currentIndex].messages" :key="index" 
+                        :class="text.status === 'sent' ? 'sent' : 'received'">
+
+                            <div class="message" :class="text.status === 'sent' ? 'message-green' : 'message-white' ">
+                                <p class="text-message">{{ text.message }}</p>
+                                <p class="text-date"> {{ text.date }} </p>
                             </div>
 
                         </div>
-                        <!-- messaggi inviati -->
-                        <div id="sent">
-                            <div class="message message-white">
-                                <p>Tutto fatto</p>
-                                <p class="text-message">10:30</p>
-                            </div>
-                        </div>
-
 
 
                     </div>
@@ -162,7 +162,7 @@
                     <div class="bar container-between">
                         <i class="fa-regular fa-face-smile"></i>
                         <div id="message-bar">
-                            <input type="text" placeholder="scrivi un messaggio">
+                            <input type="text" placeholder="Scrivi un messaggio">
                         </div>
                         <i class="fa-solid fa-microphone"></i>
                     </div>

@@ -20,11 +20,14 @@ const { createApp } = Vue;
 
 createApp({
     
+    //elenco dati
     data(){
 
         return{
 
-            listContacts: [
+            //tenere traccia degli elementi
+            currentIndex: 0,
+            listContacts: [//lista dei contatti
                 {
                     name: 'Michele',
                     avatar: 'img/user-avatar1.png',
@@ -188,6 +191,13 @@ createApp({
                 }
             ]
 
+        }
+    },
+    methods:{
+
+        //selezionare il pannello dei messaggi di un contatto al click del contatto corrispondente
+        selectContact(index){
+            this.currentIndex = index;
         }
     }
 }).mount('#app')
