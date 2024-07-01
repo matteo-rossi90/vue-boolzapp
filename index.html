@@ -45,10 +45,14 @@
 
                     <!-- barra in alto -->
                     <div class="bar container-between">
+
+                        <!-- parte che mostra il profilo dell'utente di chi sta usando l'app -->
                         <div class="image-box container-flex">
                             <img src="img/user-avatar2.png" alt="avatar">
                             <h5>Matteo</h5>
                         </div>
+
+                        <!-- parte che mostra le icone nella parte alta -->
                         <div class="icon-bar">
                             <ul>
                                 <li>
@@ -81,29 +85,31 @@
 
                     <!-- barra di ricerca per filtrare i profili -->
                     <div id="search-bar">
-                        <button id="btn-search">
+                        <button id="btn-search" @click="filteredUser">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input type="text" placeholder="Cerca un contatto">
+                        <input type="text" placeholder="Cerca un contatto" v-model="searchQuery" @keyup.enter="filteredUser">
                     </div>
 
                     <!-- box che ospita la lista dei contatti -->
                     <div id="list-contacts">
 
-                            <ul class="contact">
-                                <li v-for="(item, index) in listContacts" :key="index" @click="selectContact(index)" :class="{active : index === currentIndex}">
-                                    <div class="box-contact">
-                                        <img :src="item.avatar" :alt="item.name">
+                        <!-- lista dei contatti -->
+                        <ul class="contact">
+                            <li v-for="(item, index) in filteredUser" :key="index" @click="selectContact(index)" :class="{active : index === currentIndex}">
+                                <div class="box-contact">
+                                    <img :src="item.avatar" :alt="item.name">
+                                </div>
+                                <div class="box-text">
+                                    <div class="container-between">
+                                        <h5>{{ item.name }}</h5>
+                                        <small class="list-date">12:00</small>
                                     </div>
-                                    <div class="box-text">
-                                        <div class="container-between">
-                                            <h5>{{ item.name }}</h5>
-                                            <small class="list-date">12:00</small>
-                                        </div>
-                                        <small class="text-sent">Ultimo messaggio inviato</small>
-                                    </div>
-                                </li>
-                            </ul>
+                                    <small class="text-sent">Ultimo messaggio inviato</small>
+                                </div>
+                            </li>
+                        </ul>
+
                     </div>
                 </div>
 
@@ -113,6 +119,7 @@
                     <!-- barra in alto -->
                     <div class="bar container-between">
 
+                        <!-- parte che mostra il contatto in alto -->
                         <div class="container-flex">
                             <div class="image-box">
                                 <img :src="listContacts[currentIndex].avatar" :alt="listContacts[currentIndex].name">
@@ -125,6 +132,7 @@
 
                         </div>
 
+                        <!-- parte che comprende le icone nella parte in alto -->
                         <div class="icon-bar">
                             <ul>
                                 <li>
@@ -148,6 +156,7 @@
                         <div v-for="(text, index) in listContacts[currentIndex].messages" :key="index" 
                         :class="text.status === 'sent' ? 'sent' : 'received'">
 
+                            <!-- tipo di messaggio -->
                             <div class="message" :class="text.status === 'sent' ? 'message-green' : 'message-white' ">
                                 <p class="text-message">{{ text.message }}</p>
                                 <p class="text-date"> {{ text.date }} </p>
@@ -155,16 +164,22 @@
 
                         </div>
 
-
                     </div>
 
                     <!-- barra in basso -->
                     <div class="bar container-between">
+
+                        <!-- smile -->
                         <i class="fa-regular fa-face-smile"></i>
+
+                        <!-- input per scrivere i messaggi da inviare -->
                         <div id="message-bar">
                             <input type="text" placeholder="Scrivi un messaggio" v-model="userMessage" @keyup.enter="addMessage">
                         </div>
+
+                        <!-- microfono -->
                         <i class="fa-solid fa-microphone"></i>
+
                     </div>
                 </div>
 

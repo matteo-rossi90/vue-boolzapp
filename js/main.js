@@ -25,6 +25,7 @@ createApp({
 
         return{
 
+            searchQuery:'', //stringa vuota che permette di raccogliere il nome digitato dall'utente,
             userMessage: '', // stringa vuota che raccoglie i messaggi digitati dall'utente
             currentIndex: 0,//indice del contatto considerato in quel momento
             listContacts: [//lista dei contatti
@@ -197,7 +198,8 @@ createApp({
 
         //selezionare il pannello dei messaggi di un contatto al click del contatto corrispondente
         selectContact(index){
-            this.currentIndex = index;
+            const selectedContact = this.filteredUser[index];
+            this.currentIndex = this.listContacts.findIndex(contact => contact.name === selectedContact.name);
         },
         //aggiungere il messaggio scritto dall'utente
         addMessage(){
@@ -234,6 +236,17 @@ createApp({
 
             
         }
+    },
+    computed:{
+
+        filteredUser() {
+            const query = this.searchQuery.toLowerCase();
+
+            return this.listContacts.filter(contact =>{
+                return contact.name.toLowerCase().includes(query)
+            })
+        }
+
     }
 }).mount('#app')
 
