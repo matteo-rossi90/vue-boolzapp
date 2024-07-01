@@ -25,8 +25,8 @@ createApp({
 
         return{
 
-            //tenere traccia degli elementi
-            currentIndex: 0,
+            userMessage: '', // stringa vuota che raccoglie i messaggi digitati dall'utente
+            currentIndex: 0,//indice del contatto considerato in quel momento
             listContacts: [//lista dei contatti
                 {
                     name: 'Michele',
@@ -198,6 +198,41 @@ createApp({
         //selezionare il pannello dei messaggi di un contatto al click del contatto corrispondente
         selectContact(index){
             this.currentIndex = index;
+        },
+        //aggiungere il messaggio scritto dall'utente
+        addMessage(){
+            if(this.userMessage !== ''){
+
+                //creare una nuova variabile che permetta di raccogliere i messaggi inviati
+                const newMessage = {
+                    date: '1/07/2024 12:00:01',
+                    message: this.userMessage,
+                    status: 'sent'
+                };
+
+
+                //aggiungere il nuovo messaggio al contatto corrente
+                this.listContacts[this.currentIndex].messages.push(newMessage);
+
+                //svuotare il messaggio digitato dall'utente
+                this.userMessage = '';
+
+                setTimeout(() =>{
+
+                    //creare una nuova variabile che raccolga il messaggio autogenerato
+                    const autoReply = {
+                        date: '1/07/2024 12:00:01',
+                        message: 'Ok!',
+                        status: 'received'
+                    }
+
+                    //aggiungere il nuovo messaggio al contatto corrente
+                    this.listContacts[this.currentIndex].messages.push(autoReply);
+
+                }, 1000)
+            }
+
+            
         }
     }
 }).mount('#app')
