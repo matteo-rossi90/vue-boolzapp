@@ -12,7 +12,12 @@ Risposta dall’interlocutore: ad ogni inserimento di un messaggio, l’utente r
 
 Milestone 4
 Ricerca utenti: scrivendo qualcosa nell’input a sinistra, vengono visualizzati solo i contatti il cui nome contiene le lettere inserite (es, Marco, Matteo Martina -> Scrivo “mar” rimangono solo Marco e Martina)
- */
+
+Milestone 5 - opzionale
+Cancella messaggio: cliccando sul messaggio appare un menu a tendina che permette di cancellare il messaggio selezionato
+Visualizzazione ora e ultimo messaggio inviato/ricevuto nella lista dei contatti 
+
+*/
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -25,14 +30,16 @@ createApp({
 
         return{
 
-            searchQuery:'', //stringa vuota che permette di raccogliere il nome digitato dall'utente,
+            searchQuery:'', //stringa vuota che permette di raccogliere il nome digitato dall'utente
             userMessage: '', // stringa vuota che raccoglie i messaggi digitati dall'utente
-            currentIndex: 0,//indice del contatto considerato in quel momento
+            dropdownIndex: null,
+            currentIndex: 0,//indice del contatto considerato in quel momento che va aggiornato in base al contatto di riferimento
             listContacts: [//lista dei contatti
                 {
                     name: 'Michele',
                     avatar: 'img/user-avatar1.png',
                     visible: true,
+                    lastMessageTime: '10/01/2020 16:15:22',
                     messages: [
                         {
                             date: '10/01/2020 15:30:55',
@@ -55,6 +62,7 @@ createApp({
                     name: 'Fabio',
                     avatar: 'img/user-avatar3.png',
                     visible: true,
+                    lastMessageTime: '20/03/2020 16:30:55',
                     messages: [
                         {
                             date: '20/03/2020 16:30:00',
@@ -77,6 +85,7 @@ createApp({
                     name: 'Samuele',
                     avatar: 'img/user-avatar4.png',
                     visible: true,
+                    lastMessageTime: '28/03/2020 16:15:22',
                     messages: [
                         {
                             date: '28/03/2020 10:10:40',
@@ -99,6 +108,7 @@ createApp({
                     name: 'Alessandro B.',
                     avatar: 'img/user-avatar5.png',
                     visible: true,
+                    lastMessageTime: '10/01/2020 15:50:00',
                     messages: [
                         {
                             date: '10/01/2020 15:30:55',
@@ -116,6 +126,7 @@ createApp({
                     name: 'Alessandro L.',
                     avatar: 'img/user-avatar6.png',
                     visible: true,
+                    lastMessageTime: '10/01/2020 15:50:22', 
                     messages: [
                         {
                             date: '10/01/2020 15:30:55',
@@ -133,6 +144,7 @@ createApp({
                     name: 'Claudia',
                     avatar: 'img/user-avatar7.png',
                     visible: true,
+                    lastMessageTime: '10/01/2020 15:50:00',
                     messages: [
                         {
                             date: '10/01/2020 15:30:55',
@@ -155,6 +167,7 @@ createApp({
                     name: 'Alessia',
                     avatar: 'img/user-avatar8.png',
                     visible: true,
+                    lastMessageTime: '10/01/2020 15:50:00',
                     messages: [
                         {
                             date: '10/01/2020 15:30:55',
@@ -172,6 +185,7 @@ createApp({
                     name: 'Clarissa',
                     avatar: 'img/user-avatar9.png',
                     visible: true,
+                    lastMessageTime: '10/01/2020 15:50:00',
                     messages: [
                         {
                             date: '10/01/2020 15:30:55',
@@ -207,7 +221,7 @@ createApp({
 
                 //creare una nuova variabile che permetta di raccogliere i messaggi inviati
                 const newMessage = {
-                    date: '1/07/2024 12:00:01',
+                    date: luxon.DateTime.now().toFormat('dd/mm/yyyy HH:mm:ss'),
                     message: this.userMessage,
                     status: 'sent'
                 };
@@ -216,6 +230,9 @@ createApp({
                 //aggiungere il nuovo messaggio al contatto corrente
                 this.listContacts[this.currentIndex].messages.push(newMessage);
 
+                // aggiornare la data e l'ora dell'ultimo messaggio inviato
+                this.updateContactTime(this.currentIndex, newMessage.date);
+
                 //svuotare il messaggio digitato dall'utente
                 this.userMessage = '';
 
@@ -223,7 +240,7 @@ createApp({
 
                     //creare una nuova variabile che raccolga il messaggio autogenerato
                     const autoReply = {
-                        date: '1/07/2024 12:00:01',
+                        date: luxon.DateTime.now().toFormat('dd/mm/yyyy HH:mm:ss'),
                         message: 'Ok!',
                         status: 'received'
                     }
@@ -231,14 +248,33 @@ createApp({
                     //aggiungere il nuovo messaggio al contatto corrente
                     this.listContacts[this.currentIndex].messages.push(autoReply);
 
-                }, 1000)
+                    // aggiornare la data e l'ora dell'ultimo messaggio ricevuto
+                    this.updateContactTime(this.currentIndex, autoReply.date);
+
+                }, 1000)//delay di 1 secondo
             }
 
             
+        },
+        //attivazione del menu a tendina cliccando sull'icona nel messaggio
+        toggleDropdown(index) {
+            this.dropdownIndex = this.dropdownIndex === index ? null : index;
+        },
+        //cancella il messaggio dal menu a tendina
+        deleteMessage(index, status){
+            if(status === 'sent'){
+                this.listContacts[this.currentIndex].messages.splice(index, 1);
+            }
+        
+        },
+        // aggiorna la data e l'ora dell'ultimo messaggio del contatto
+        updateContactTime(index, date) {
+            this.listContacts[index].lastMessageTime = date;
         }
     },
     computed:{
 
+        //funzione che filtra i nomi dei contatti partendo dalle lettere digitate dall'utente
         filteredUser() {
             const query = this.searchQuery.toLowerCase();
 

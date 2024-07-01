@@ -7,18 +7,21 @@
     box-sizing: border-box;
 }
 
+/* tipo di container flexbox base */
 .container-flex {
     display: flex;
     align-items: center;
     gap: 5px;
 }
 
+/* tipo di container flexbox per distanziare oggetti */
 .container-between {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+/* proprietà per le liste */
 .bar ul {
     display: flex;
     list-style-type: none;
@@ -33,10 +36,12 @@
     color: grey;
 }
 
+/* proprietà per ogni testo scritto in piccolo */
 .box-text small {
     color: rgb(156, 156, 156);
 }
 
+/* attivazione del puntatore per ogni icona */
 i{
     cursor:pointer;
 }
@@ -185,6 +190,7 @@ i{
 }
 
 .text-sent,
+.text-notification,
 .list-date{
     font-size: 10px;
 }
@@ -205,6 +211,13 @@ i{
     flex-shrink: 0;
 }
 
+/* box dei messaggi */
+#box-message {
+    height: calc(100% - 100px);
+    width: 100%;
+    overflow-y: auto;
+}
+
 /* messaggi ricevuti e inviati */
 #box-message > div{
     font-size: 12px;
@@ -222,6 +235,7 @@ i{
     margin-top: 40px;
 }
 
+/* messaggi inviati */
 .sent{
     margin-right: 50px;
     margin-left: calc(100% - 300px)
@@ -229,8 +243,10 @@ i{
 
 .message-green{
     background-color: #D5F9BA;
+    position: relative;
 }
 
+/* messaggi ricevuti */
 .received{
     margin-left: 50px;
     margin-right: calc(100% - 300px)
@@ -255,6 +271,48 @@ i{
     padding: 5px;
 }
 
+/* dropdown dei messaggi */
+
+.dropdown:after {
+    content: "\2728";
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 15px;
+    padding: 5px;
+    cursor: pointer;
+
+}
+
+.dropdown-menu{
+    background-color:white;
+    border: 1px solid rgb(239, 239, 239);
+    position: absolute;
+    top: 50%;
+    transform: translate(80px);
+    z-index: 900;
+    color: rgb(105, 105, 105);
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px 2px rgba(133, 133, 133, 0.3);
+    display: none
+}
+
+.dropdown-menu ul li{
+    list-style-type: none;
+    font-size: 15px;
+    padding: 15px 30px;
+    cursor: pointer;
+}
+
+/* classe che permette di attivare il dropdown menu al click dell'icona */
+.active-dropdown{
+    display: inline-block;
+}
+
+.dropdown-menu li:hover{
+    background-color:rgb(238, 238, 238);
+}
+
 /* barra in basso */
 #message-bar {
     flex: 1;
@@ -272,11 +330,4 @@ i{
     padding: 0 30px;
     font-size: 20px;
     color: grey;
-}
-
-/* box dei messaggi */
-#box-message {
-    height: calc(100% - 100px);
-    width: 100%;
-    overflow-y: auto;
 }

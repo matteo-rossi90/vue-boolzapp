@@ -72,20 +72,25 @@
 
                     <!-- barra notifiche -->
                     <div id="notification" class="container-flex">
+
+                        <!-- icona della campanella -->
                         <div class="circle container-flex">
                             <i class="fa-solid fa-bell-slash"></i>
                         </div>
+
+                        <!-- testi -->
                         <div class="box-text">
                             <h5>Ricevi notifiche di nuovi messaggi</h5>
-                            <small>
+                            <small class="text-notification">
                                 <a href="#">Attiva notifiche desktop</a>
                             </small>
                         </div>
+
                     </div>
 
                     <!-- barra di ricerca per filtrare i profili -->
                     <div id="search-bar">
-                        <button id="btn-search" @click="filteredUser">
+                        <button id="btn-search">
                             <i class="fa fa-search"></i>
                         </button>
                         <input type="text" placeholder="Cerca un contatto" v-model="searchQuery" @keyup.enter="filteredUser">
@@ -97,16 +102,21 @@
                         <!-- lista dei contatti -->
                         <ul class="contact">
                             <li v-for="(item, index) in filteredUser" :key="index" @click="selectContact(index)" :class="{active : index === currentIndex}">
+                                
+                                <!-- immagine avatar -->
                                 <div class="box-contact">
                                     <img :src="item.avatar" :alt="item.name">
                                 </div>
+
+                                <!-- testi contatti -->
                                 <div class="box-text">
                                     <div class="container-between">
                                         <h5>{{ item.name }}</h5>
-                                        <small class="list-date">12:00</small>
+                                        <small class="list-date">{{ item.lastMessageTime }}</small>
                                     </div>
                                     <small class="text-sent">Ultimo messaggio inviato</small>
                                 </div>
+
                             </li>
                         </ul>
 
@@ -121,13 +131,17 @@
 
                         <!-- parte che mostra il contatto in alto -->
                         <div class="container-flex">
+
+                            <!-- immagine del contatto corrente -->
                             <div class="image-box">
                                 <img :src="listContacts[currentIndex].avatar" :alt="listContacts[currentIndex].name">
                             
                             </div>
+
+                            <!-- testi del contatto corrente -->
                             <div class="box-text">
                                 <h5> {{ listContacts[currentIndex].name}} </h5>
-                                <small class="text-sent">Ultimo accesso alle 12:00</small>
+                                <small class="text-sent">Ultimo accesso alle {{listContacts[currentIndex].lastMessageTime}}</small>
                             </div>
 
                         </div>
@@ -157,7 +171,13 @@
                         :class="text.status === 'sent' ? 'sent' : 'received'">
 
                             <!-- tipo di messaggio -->
-                            <div class="message" :class="text.status === 'sent' ? 'message-green' : 'message-white' ">
+                            <div class="message" :class="text.status === 'sent' ? 'dropdown message-green' : 'message-white' " @click="toggleDropdown(index)">
+                                <div class="dropdown-menu" :class="{ 'active-dropdown': dropdownIndex === index }">
+                                    <ul>
+                                        <li>Message info</li>
+                                        <li @click="deleteMessage(index, text.status)">Delete message</li>
+                                    </ul>
+                                </div>
                                 <p class="text-message">{{ text.message }}</p>
                                 <p class="text-date"> {{ text.date }} </p>
                             </div>
