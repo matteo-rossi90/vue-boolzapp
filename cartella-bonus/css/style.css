@@ -1,0 +1,333 @@
+/* regole principali */
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato',Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+/* tipo di container flexbox base */
+.container-flex {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* tipo di container flexbox per distanziare oggetti */
+.container-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* proprietà per le liste */
+.bar ul {
+    display: flex;
+    list-style-type: none;
+}
+
+.bar ul li {
+    padding: 15px 10px;
+}
+
+.icon-bar{
+    padding: 0 10px;
+    color: grey;
+}
+
+/* proprietà per ogni testo scritto in piccolo */
+.box-text small {
+    color: rgb(156, 156, 156);
+}
+
+/* attivazione del puntatore per ogni icona */
+i{
+    cursor:pointer;
+}
+
+/* regole per il contenitore principale e i relativi blocchi */
+
+#wrap-container {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#top-block {
+    background-color: #009688;
+    height: 100px;
+    width: 100%;
+}
+
+#bottom-block {
+    background-color: #DCDBD2;
+    height: calc(100vh - 100px);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* regole per il blocco centrale relativo all'applicazione */
+
+#bool-application {
+    width: 80%;
+    height: calc(100vh - 50px);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+}
+
+/* regole generali per le barre in alto */
+.bar {
+    height: 50px;
+    width: 100%;
+    background-color: #EAEAEA;
+}
+
+/* PARTE LATERALE */
+/* barra laterale */
+#sidebar {
+    height: 100%;
+    width: 400px;
+    background-color: #FFFFFF;
+    border: 1px solid gainsboro;
+}
+
+/* barra in alto della barra laterale */
+.image-box {
+    height: 45px;
+    width: 45px;
+    padding: 5px;
+}
+
+.image-box img {
+    max-width: 100%;
+    border-radius: 100%;
+}
+
+/* box ricevi notifiche */
+#notification {
+    height: 60px;
+    background-color: #8EDAFC;
+}
+
+.circle {
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    background-color: white;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fa-bell-slash {
+    font-size: 20px;
+    padding: 5px;
+    color: #8EDAFC;
+}
+
+/* barra di ricerca per il filtro nella barra laterale */
+
+#search-bar {
+    background-color: #EAEAEA;
+    height: 40px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+#search-bar input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+#btn-search{
+    width: 20%;
+    padding: 5px;
+    background-color: white;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+/* box contatti */
+#list-contacts {
+    height: calc(100% - 150px);
+    overflow-y: auto;
+}
+
+.contact li{
+    display: flex;
+    align-items:center;
+    border-bottom: 1px solid gainsboro;
+    cursor:pointer;
+    padding: 0 10px;
+}
+
+.box-contact{
+    height: 60px;
+    width: 60px;
+}
+
+.box-contact img{
+    max-width: 100%;
+    border-radius: 100%;
+    padding: 8px;
+}
+
+.contact li:hover{
+    background-color:rgb(239, 239, 239)
+}
+
+.list-date{
+    margin-right: calc(100% - 300px);
+}
+
+.text-sent,
+.text-notification,
+.list-date{
+    font-size: 10px;
+}
+
+/* proprietà che seleziona il contatto attivo, importante per Vue */
+.active{
+    background-color:#dcdcdc;
+}
+
+/* PARTE CENTRALE */
+
+/* corpo dell'applicazione */
+#body-app {
+    height: 100%;
+    width: calc(100% - 400px);
+    background-image: url('../img/background_chat.png');
+    background-size: 60%;
+    flex-shrink: 0;
+}
+
+/* box dei messaggi */
+#box-message {
+    height: calc(100% - 100px);
+    width: 100%;
+    overflow-y: auto;
+}
+
+/* messaggi ricevuti e inviati */
+#box-message > div{
+    font-size: 12px;
+}
+
+.message{
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    position: relative;
+}
+
+.sent,
+.received{
+    margin-top: 40px;
+}
+
+/* messaggi inviati */
+.sent{
+    margin-right: 50px;
+    margin-left: calc(100% - 300px)
+}
+
+.message-green{
+    background-color: #D5F9BA;
+    position: relative;
+}
+
+/* messaggi ricevuti */
+.received{
+    margin-left: 50px;
+    margin-right: calc(100% - 300px)
+}
+
+.message-white{
+    background-color:white;
+}
+
+.text-message{
+    margin: 12px 0;
+    font-size: 13px;
+}
+
+.text-date{
+    text-align: right;
+    font-size: 8px;
+    color: gray;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 5px;
+}
+
+/* dropdown dei messaggi */
+
+.dropdown:after {
+    content: "\2728";
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 15px;
+    padding: 5px;
+    cursor: pointer;
+
+}
+
+.dropdown-menu{
+    background-color:white;
+    border: 1px solid rgb(239, 239, 239);
+    position: absolute;
+    top: 50%;
+    transform: translate(80px);
+    z-index: 900;
+    color: rgb(105, 105, 105);
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px 2px rgba(133, 133, 133, 0.3);
+    display: none
+}
+
+.dropdown-menu ul li{
+    list-style-type: none;
+    font-size: 15px;
+    padding: 15px 30px;
+    cursor: pointer;
+}
+
+/* classe che permette di attivare il dropdown menu al click dell'icona */
+.active-dropdown{
+    display: inline-block;
+}
+
+.dropdown-menu li:hover{
+    background-color:rgb(238, 238, 238);
+}
+
+/* barra in basso */
+#message-bar {
+    flex: 1;
+    padding: 0 10px;
+}
+
+#message-bar input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.fa-face-smile,
+.fa-microphone{
+    padding: 0 30px;
+    font-size: 20px;
+    color: grey;
+}

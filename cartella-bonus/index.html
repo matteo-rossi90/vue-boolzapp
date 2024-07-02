@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- link CDN Luxon -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.4/luxon.min.js"
+        integrity="sha512-dUlSLLkxslGILhPdCkALwk4szPhp3xmZIKFtlUD+O9Lslq41Aksmdt5OGqpomDoT4FsCUH70jQU8ezZHI3v1RQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- link Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- link CDN fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- link CDN Vue -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- link CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <title>Boolsapp</title>
+</head>
+<body>
+
+    <div id="app">
+
+        <div id="wrap-container">
+
+            <div id="top-block"></div>
+            <div id="bottom-block"></div>
+
+            <!-- applicazione -->
+            <div id="bool-application">
+
+                <!-- barra laterale scrollabile -->
+                <div id="sidebar">
+
+                    <!-- barra in alto -->
+                    <div class="bar container-between">
+
+                        <!-- parte che mostra il profilo dell'utente di chi sta usando l'app -->
+                        <div class="image-box container-flex">
+                            <img src="img/user-avatar2.png" alt="avatar">
+                            <h5>Matteo</h5>
+                        </div>
+
+                        <!-- parte che mostra le icone nella parte alta -->
+                        <div class="icon-bar">
+                            <ul>
+                                <li>
+                                    <i class="fa-solid fa-circle-notch"></i>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-message"></i>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </li>
+                            </ul>
+                            
+                        </div>
+
+                    </div>
+
+                    <!-- barra notifiche -->
+                    <div id="notification" class="container-flex">
+
+                        <!-- icona della campanella -->
+                        <div class="circle container-flex">
+                            <i class="fa-solid fa-bell-slash"></i>
+                        </div>
+
+                        <!-- testi -->
+                        <div class="box-text">
+                            <h5>Ricevi notifiche di nuovi messaggi</h5>
+                            <small class="text-notification">
+                                <a href="#">Attiva notifiche desktop</a>
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <!-- barra di ricerca per filtrare i profili -->
+                    <div id="search-bar">
+                        <button id="btn-search">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <input type="text" placeholder="Cerca un contatto" v-model="searchQuery" @keyup.enter="filteredUser">
+                    </div>
+
+                    <!-- box che ospita la lista dei contatti -->
+                    <div id="list-contacts">
+
+                        <!-- lista dei contatti -->
+                        <ul class="contact">
+                            <li v-for="(item, index) in filteredUser" :key="index" @click="selectContact(index)" :class="{active : index === currentIndex}">
+                                
+                                <!-- immagine avatar -->
+                                <div class="box-contact">
+                                    <img :src="item.avatar" :alt="item.name">
+                                </div>
+
+                                <!-- testi contatti -->
+                                <div class="box-text">
+                                    <div class="container-between">
+                                        <h5>{{ item.name }}</h5>
+                                        <small class="list-date">{{ item.lastMessageTime }}</small>
+                                    </div>
+                                    <small class="text-sent">Ultimo messaggio inviato</small>
+                                </div>
+
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <!-- corpo principale scrollabile -->
+                <div id="body-app">
+
+                    <!-- barra in alto -->
+                    <div class="bar container-between">
+
+                        <!-- parte che mostra il contatto in alto -->
+                        <div class="container-flex">
+
+                            <!-- immagine del contatto corrente -->
+                            <div class="image-box">
+                                <img :src="listContacts[currentIndex].avatar" :alt="listContacts[currentIndex].name">
+                            
+                            </div>
+
+                            <!-- testi del contatto corrente -->
+                            <div class="box-text">
+                                <h5> {{ listContacts[currentIndex].name}} </h5>
+                                <small class="text-sent">Ultimo accesso alle {{listContacts[currentIndex].lastMessageTime}}</small>
+                            </div>
+
+                        </div>
+
+                        <!-- parte che comprende le icone nella parte in alto -->
+                        <div class="icon-bar">
+                            <ul>
+                                <li>
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-paperclip"></i>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </li>
+                            </ul>
+                        
+                        </div>
+                    </div>
+
+                    <!-- contenitore messaggi -->
+                    <div id="box-message">
+
+                        <!-- messaggi -->
+                        <div v-for="(text, index) in listContacts[currentIndex].messages" :key="index" 
+                        :class="text.status === 'sent' ? 'sent' : 'received'">
+
+                            <!-- tipo di messaggio -->
+                            <div class="message" :class="text.status === 'sent' ? 'dropdown message-green' : 'message-white' " @click="toggleDropdown(index)">
+                                <div class="dropdown-menu" :class="{ 'active-dropdown': dropdownIndex === index }">
+                                    <ul>
+                                        <li>Message info</li>
+                                        <li @click="deleteMessage(index, text.status)">Delete message</li>
+                                    </ul>
+                                </div>
+                                <p class="text-message">{{ text.message }}</p>
+                                <p class="text-date"> {{ text.date }} </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- barra in basso -->
+                    <div class="bar container-between">
+
+                        <!-- smile -->
+                        <i class="fa-regular fa-face-smile"></i>
+
+                        <!-- input per scrivere i messaggi da inviare -->
+                        <div id="message-bar">
+                            <input type="text" placeholder="Scrivi un messaggio" v-model="userMessage" @keyup.enter="addMessage">
+                        </div>
+
+                        <!-- microfono -->
+                        <i class="fa-solid fa-microphone"></i>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+    
+    <!-- link js -->
+    <script src="js/main.js"></script>
+</body>
+</html>
