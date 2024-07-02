@@ -37,8 +37,8 @@
 }
 
 /* proprietà per ogni testo scritto in piccolo */
-.box-text small,
-.writing {
+.text-sent,
+.status-online {
     color: rgb(156, 156, 156);
 }
 
@@ -145,16 +145,18 @@ i{
 
 #search-bar input {
     flex: 1;
-    padding: 5px;
+    padding: 5px 35px;
     border: 1px solid #ccc;
 }
 
-#btn-search{
-    width: 20%;
-    padding: 5px;
-    background-color: white;
-    border: 1px solid #ccc;
-    cursor: pointer;
+#search {
+    position: relative;
+}
+
+.fa-search {
+    position: absolute;
+    transform: translate(50%);
+    z-index: 900;
 }
 
 /* box contatti */
@@ -219,6 +221,13 @@ i{
     height: calc(100% - 100px);
     width: 100%;
     overflow-y: auto;
+}
+
+/* proprietà dei testi che appaiono durante il cambiamento di stato */
+/* status "Sta scrivendo" */
+
+.writing{
+    color: rgb(0, 161, 0);
 }
 
 /* messaggi ricevuti e inviati */

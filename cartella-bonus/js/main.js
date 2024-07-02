@@ -32,11 +32,12 @@ createApp({
 
             searchQuery:'', //stringa vuota che permette di raccogliere il nome digitato dall'utente
             userMessage: '', // stringa vuota che raccoglie i messaggi digitati dall'utente
-            dropdownIndex: null,
-            autoReplyTyping: false,
-            online: false,
-            isWriting: false, // per monitorare se l'utente sta scrivendo
-            writingTimer: null, // timer per il monitoraggio della scrittura
+            dropdownIndex: null, //variabile per gestire il menu a tendina dei messaggi inviati
+            autoReplyTyping: false, //variabile per gestire la risposta automatica del contatto
+            online: false, //variabile necessaria per gestire lo status online del contatto corrente
+            isWriting: false, //per monitorare se l'utente sta scrivendo
+            writingTimer: null, //timer per il monitoraggio della scrittura
+            pendingMessageTime: null, //nuova variabile per memorizzare temporaneamente il timestamp del messaggio
             currentIndex: 0,//indice del contatto considerato in quel momento che va aggiornato in base al contatto di riferimento
             listContacts: [//lista dei contatti
                 {
@@ -225,7 +226,7 @@ createApp({
 
                 //creare una nuova variabile che permetta di raccogliere i messaggi inviati
                 const newMessage = {
-                    date: luxon.DateTime.now().toFormat('HH:mm'),
+                    date: luxon.DateTime.now().toFormat('dd/mm/yyyy HH:mm'),
                     message: this.userMessage,
                     status: 'sent'
                 };
@@ -234,8 +235,8 @@ createApp({
                 //aggiungere il nuovo messaggio al contatto corrente
                 this.listContacts[this.currentIndex].messages.push(newMessage);
 
-                // aggiornare la data e l'ora dell'ultimo messaggio inviato
-                this.updateContactTime(this.currentIndex, newMessage.date);
+                // Memorizzare temporaneamente la data e l'ora dell'ultimo messaggio inviato
+                this.pendingMessageTime = newMessage.date;
 
                 //svuotare il messaggio digitato dall'utente
                 this.userMessage = '';
@@ -246,7 +247,7 @@ createApp({
                 //visualizzare lo stato online dopo 4 secondi
                 setTimeout(() =>{
                     this.online = true;
-                }, 2000);
+                }, 3000);
 
                 //risposta dell'utente dopo un intervallo di tempo
                 setTimeout(() =>{
@@ -279,7 +280,7 @@ createApp({
 
                         //creare una nuova variabile che raccolga il messaggio autogenerato
                         const autoReply = {
-                            date: luxon.DateTime.now().toFormat('HH:mm'),
+                            date: luxon.DateTime.now().toFormat('dd/mm/yyyy HH:mm'),
                             message: randomReply,
                             status: 'received',
                             isWriting: true
@@ -288,14 +289,15 @@ createApp({
                         //aggiungere il nuovo messaggio al contatto corrente
                         this.listContacts[this.currentIndex].messages.push(autoReply);
 
-                        // aggiornare la data e l'ora dell'ultimo messaggio ricevuto
-                        this.updateContactTime(this.currentIndex, autoReply.date);
-
                         this.autoReplyTyping = false;
+                        
+                        // aggiornare la data e l'ora dell'ultimo accesso con il timestamp memorizzato
+                        this.updateContactTime(this.currentIndex, this.pendingMessageTime);
 
-                    }, 3000);//delay di 5 secondi
+                    }, 4000);//delay di 4 secondi
 
-                }, 4000);
+
+                }, 5000);
 
             }
 
@@ -313,13 +315,19 @@ createApp({
         
         },
         // aggiornare la data e l'ora dell'ultimo messaggio del contatto
-        updateContactTime(index, date) {
-            this.listContacts[index].lastMessageTime = date;
+        updateContactTime(index, time) {
+            this.listContacts[index].lastMessageTime = time;
+        },
+        //estrarre solo l'ora dalla proprietà date
+        formatTime(date) {
+            return date.slice(11, 16);
         },
         //gestire lo stato online del contatto corrente
         handleTyping() {
-            if (this.writingTimer) clearTimeout(this.writingTimer);
-            this.isWriting = true;
+            if (!this.isWriting) {
+                this.isWriting = true;
+            }
+            clearTimeout(this.writingTimer);
             this.writingTimer = setTimeout(() => {
                 this.isWriting = false;
             }, 3000); // considera l'utente "sta scrivendo" per 3 secondo dopo l'ultima digitazione

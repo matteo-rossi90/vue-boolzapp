@@ -90,10 +90,8 @@
 
                     <!-- barra di ricerca per filtrare i profili -->
                     <div id="search-bar">
-                        <button id="btn-search">
-                            <i class="fa fa-search"></i>
-                        </button>
-                        <input type="text" placeholder="Cerca un contatto" v-model="searchQuery" @keyup.enter="filteredUser">
+                        <i class="fa fa-search"></i>
+                        <input id="search" type="text" placeholder="Cerca un contatto" v-model="searchQuery" @keyup.enter="filteredUser">
                     </div>
 
                     <!-- box che ospita la lista dei contatti -->
@@ -112,7 +110,7 @@
                                 <div class="box-text">
                                     <div class="container-between">
                                         <h5>{{ item.name }}</h5>
-                                        <small class="list-date">{{ item.lastMessageTime }}</small>
+                                        <small class="list-date">{{ formatTime(item.lastMessageTime) }}</small>
                                     </div>
                                     <small class="text-sent">
                                         {{ item.messages[item.messages.length - 1].message }}
@@ -143,11 +141,11 @@
                             <!-- testi del contatto corrente -->
                             <div class="box-text">
                                 <h5> {{ listContacts[currentIndex].name}} </h5>
-                                <p v-if="onlineStatus()" class="status-online">online</p>
-                                <p v-else-if="autoReplyTyping" class="writing">
+                                <small v-if="onlineStatus()" class="status-online">online</small>
+                                <small v-else-if="autoReplyTyping" class="writing">
                                     Sta scrivendo...
-                                </p>
-                                <small v-else class="text-sent">Ultimo accesso alle {{listContacts[currentIndex].lastMessageTime}}</small>
+                                </small>
+                                <small v-else class="text-sent">Ultimo accesso alle {{ formatTime(listContacts[currentIndex].lastMessageTime) }}</small>
                             </div>
 
                         </div>
@@ -185,7 +183,7 @@
                                     </ul>
                                 </div>
                                 <p class="text-message">{{ text.message }}</p>
-                                <p class="text-date"> {{ text.date }} </p>
+                                <p class="text-date"> {{ formatTime(text.date) }} </p>
                             </div>
 
                         </div>
