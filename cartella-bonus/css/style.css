@@ -337,9 +337,19 @@ i{
     border: 1px solid #ccc;
 }
 
+/* proprietà per gestire le icone nella barra in basso */
+.fa-face-smile,
+.fa-microphone,
+.fa-paper-plane{
+    padding: 0 30px;
+    color: grey;
+}
+
 .fa-face-smile,
 .fa-microphone{
-    padding: 0 30px;
     font-size: 20px;
-    color: grey;
+}
+
+.fa-paper-plane{
+    font-size: 15px;
 }

@@ -198,11 +198,11 @@
 
                         <!-- input per scrivere i messaggi da inviare -->
                         <div id="message-bar">
-                            <input type="text" @input="handleTyping" placeholder="Scrivi un messaggio" v-model="userMessage" @keyup.enter="addMessage">
+                            <input type="text" @input="handleTyping" @keypress.enter="addMessage" placeholder="Scrivi un messaggio" v-model="userMessage" @keyup.enter="addMessage">
                         </div>
 
                         <!-- microfono -->
-                        <i class="fa-solid fa-microphone"></i>
+                        <i :class="['fa-solid', inputIcon]" @click="addMessage" ></i>
 
                     </div>
                 </div>

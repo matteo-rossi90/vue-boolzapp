@@ -29,7 +29,6 @@ createApp({
     data(){
 
         return{
-
             searchQuery:'', //stringa vuota che permette di raccogliere il nome digitato dall'utente
             userMessage: '', // stringa vuota che raccoglie i messaggi digitati dall'utente
             dropdownIndex: null, //variabile per gestire il menu a tendina dei messaggi inviati
@@ -339,7 +338,7 @@ createApp({
         //cambiare lo stato del contatto corrente quando sta generando una frase a caso come risposta all'utente
         isAutoReplyTyping() {
             return this.autoReplyTyping && this.currentIndex;
-        }
+        }    
     },
     computed:{
 
@@ -350,6 +349,10 @@ createApp({
             return this.listContacts.filter(contact =>{
                 return contact.name.toLowerCase().includes(query)
             })
+        },
+        //funzione che sostituisce l'icona del microfono con quella dell'aeroplano quando l'utente sta scrivendo il messaggio
+        inputIcon() {
+            return this.userMessage ? 'fa-paper-plane' : 'fa-microphone';
         }
 
     }
