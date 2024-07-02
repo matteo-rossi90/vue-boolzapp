@@ -270,7 +270,11 @@ createApp({
         // aggiorna la data e l'ora dell'ultimo messaggio del contatto
         updateContactTime(index, date) {
             this.listContacts[index].lastMessageTime = date;
-        }
+        },
+        //estrarre solo l'ora dalla proprietà date
+        formatTime(date) {
+            return date.slice(11, 16);
+        },
     },
     computed:{
 

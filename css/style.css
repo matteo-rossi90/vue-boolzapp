@@ -144,16 +144,18 @@ i{
 
 #search-bar input {
     flex: 1;
-    padding: 5px;
+    padding: 5px 35px;
     border: 1px solid #ccc;
 }
 
-#btn-search{
-    width: 20%;
-    padding: 5px;
-    background-color: white;
-    border: 1px solid #ccc;
-    cursor: pointer;
+#search{
+    position:relative;
+}
+
+.fa-search{
+    position: absolute;
+    transform: translate(50%);
+    z-index: 900;
 }
 
 /* box contatti */
@@ -207,7 +209,7 @@ i{
     height: 100%;
     width: calc(100% - 400px);
     background-image: url('../img/background_chat.png');
-    background-size:contain;
+    background-size:60%;
     flex-shrink: 0;
 }
 
