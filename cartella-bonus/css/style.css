@@ -37,7 +37,8 @@
 }
 
 /* proprietà per ogni testo scritto in piccolo */
-.box-text small {
+.box-text small,
+.writing {
     color: rgb(156, 156, 156);
 }
 
@@ -191,7 +192,9 @@ i{
 
 .text-sent,
 .text-notification,
-.list-date{
+.list-date,
+.status-online,
+.writing{
     font-size: 10px;
 }
 

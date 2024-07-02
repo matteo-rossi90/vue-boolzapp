@@ -33,6 +33,10 @@ createApp({
             searchQuery:'', //stringa vuota che permette di raccogliere il nome digitato dall'utente
             userMessage: '', // stringa vuota che raccoglie i messaggi digitati dall'utente
             dropdownIndex: null,
+            autoReplyTyping: false,
+            online: false,
+            isWriting: false, // per monitorare se l'utente sta scrivendo
+            writingTimer: null, // timer per il monitoraggio della scrittura
             currentIndex: 0,//indice del contatto considerato in quel momento che va aggiornato in base al contatto di riferimento
             listContacts: [//lista dei contatti
                 {
@@ -221,7 +225,7 @@ createApp({
 
                 //creare una nuova variabile che permetta di raccogliere i messaggi inviati
                 const newMessage = {
-                    date: luxon.DateTime.now().toFormat('dd/mm/yyyy HH:mm:ss'),
+                    date: luxon.DateTime.now().toFormat('HH:mm'),
                     message: this.userMessage,
                     status: 'sent'
                 };
@@ -236,39 +240,63 @@ createApp({
                 //svuotare il messaggio digitato dall'utente
                 this.userMessage = '';
 
-                // Risposte automatiche casuali
-                const replies = [
-                    'OK', 
-                    'Ricevuto', 
-                    'Va bene', 
-                    'D\'accordo', 
-                    'Bene, grazie, e tu?', 
-                    'Cosa mi racconti?', 
-                    'Da quanto non ci si sente?',
-                    'Non essere scortese',
-                    'Hai visto che sta succedendo in politica?',
-                    'Ma hai saputo di Marta? Ieri si è sposata',
-                    'Oggi non ho fatto nulla...'
-                ];
+                //impostazione di default
+                this.isWriting = false;
 
-                const randomReply = replies[Math.floor(Math.random() * replies.length)];
+                //visualizzare lo stato online dopo 4 secondi
+                setTimeout(() =>{
+                    this.online = true;
+                }, 2000);
 
+                //risposta dell'utente dopo un intervallo di tempo
                 setTimeout(() =>{
 
-                    //creare una nuova variabile che raccolga il messaggio autogenerato
-                    const autoReply = {
-                        date: luxon.DateTime.now().toFormat('dd/mm/yyyy HH:mm:ss'),
-                        message: randomReply,
-                        status: 'received'
-                    }
+                    this.online = false;
 
-                    //aggiungere il nuovo messaggio al contatto corrente
-                    this.listContacts[this.currentIndex].messages.push(autoReply);
+                    // iniziare lo stato "sta scrivendo"
+                    this.autoReplyTyping = true;
 
-                    // aggiornare la data e l'ora dell'ultimo messaggio ricevuto
-                    this.updateContactTime(this.currentIndex, autoReply.date);
+                    // Risposte automatiche casuali
+                    const replies = [
+                        'OK',
+                        'Ricevuto',
+                        'Va bene',
+                        'D\'accordo',
+                        'Bene, grazie, e tu?',
+                        'Cosa mi racconti?',
+                        'Da quanto non ci si sente?',
+                        'Non essere scortese',
+                        'Hai visto che sta succedendo in politica?',
+                        'Ma hai saputo di Marta? Ieri si è sposata',
+                        'Oggi non ho fatto nulla...'
+                    ];
 
-                }, 1000)//delay di 1 secondo
+                    const randomReply = replies[Math.floor(Math.random() * replies.length)];
+
+                    setTimeout(() => {
+
+                        this.online = false;
+
+                        //creare una nuova variabile che raccolga il messaggio autogenerato
+                        const autoReply = {
+                            date: luxon.DateTime.now().toFormat('HH:mm'),
+                            message: randomReply,
+                            status: 'received',
+                            isWriting: true
+                        }
+
+                        //aggiungere il nuovo messaggio al contatto corrente
+                        this.listContacts[this.currentIndex].messages.push(autoReply);
+
+                        // aggiornare la data e l'ora dell'ultimo messaggio ricevuto
+                        this.updateContactTime(this.currentIndex, autoReply.date);
+
+                        this.autoReplyTyping = false;
+
+                    }, 3000);//delay di 5 secondi
+
+                }, 4000);
+
             }
 
             
@@ -284,9 +312,25 @@ createApp({
             }
         
         },
-        // aggiorna la data e l'ora dell'ultimo messaggio del contatto
+        // aggiornare la data e l'ora dell'ultimo messaggio del contatto
         updateContactTime(index, date) {
             this.listContacts[index].lastMessageTime = date;
+        },
+        //gestire lo stato online del contatto corrente
+        handleTyping() {
+            if (this.writingTimer) clearTimeout(this.writingTimer);
+            this.isWriting = true;
+            this.writingTimer = setTimeout(() => {
+                this.isWriting = false;
+            }, 3000); // considera l'utente "sta scrivendo" per 3 secondo dopo l'ultima digitazione
+        },
+        //gestire lo status online quando il contatto è attivo dopo che l'utente ha inviato il messaggio
+        onlineStatus() {
+            return this.online;
+        },
+        //cambiare lo stato del contatto corrente quando sta generando una frase a caso come risposta all'utente
+        isAutoReplyTyping() {
+            return this.autoReplyTyping && this.currentIndex;
         }
     },
     computed:{
