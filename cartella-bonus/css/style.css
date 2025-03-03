@@ -184,12 +184,12 @@ i{
     padding: 8px;
 }
 
-.contact li:hover{
-    background-color:rgb(239, 239, 239)
+.box-text{
+    width: 100%;
 }
 
-.list-date{
-    margin-right: calc(100% - 300px);
+.contact li:hover{
+    background-color:rgb(239, 239, 239)
 }
 
 .text-sent,
@@ -352,4 +352,27 @@ i{
 
 .fa-paper-plane{
     font-size: 15px;
+}
+
+@media (max-width: 900px){
+    #sidebar,
+    #body-app {
+        width: 50%;
+    }
+}
+
+@media (max-width: 800px){
+    #bool-application{
+        width:100%;
+    }
+}
+
+@media (max-width: 625px){
+    #sidebar{
+        width: 100%;
+    }
+    
+    #body-app{
+        display: none;
+    }
 }
