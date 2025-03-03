@@ -41,7 +41,7 @@
             <div id="bool-application">
 
                 <!-- barra laterale scrollabile -->
-                <div id="sidebar">
+                <div id="sidebar-responsive" v-if="showSidenav">
 
                     <!-- barra in alto -->
                     <div class="bar container-between">
@@ -71,10 +71,10 @@
                     </div>
 
                     <!-- barra notifiche -->
-                    <div id="notification" class="container-flex">
+                    <div class="notification container-flex">
 
                         <!-- icona della campanella -->
-                        <div class="circle container-flex">
+                        <div class="circle">
                             <i class="fa-solid fa-bell-slash"></i>
                         </div>
 
@@ -89,13 +89,13 @@
                     </div>
 
                     <!-- barra di ricerca per filtrare i profili -->
-                    <div id="search-bar">
+                    <div class="search-bar">
                         <i class="fa fa-search"></i>
                         <input id="search" type="text" placeholder="Cerca un contatto" v-model="searchQuery" @keyup.enter="filteredUser">
                     </div>
 
                     <!-- box che ospita la lista dei contatti -->
-                    <div id="list-contacts">
+                    <div class="list-contacts">
 
                         <!-- lista dei contatti -->
                         <ul class="contact">
@@ -123,8 +123,92 @@
                     </div>
                 </div>
 
+                <div id="sidebar-responsive" v-else>
+                    <div class="bar container-between">
+                
+                        <!-- parte che mostra il profilo dell'utente di chi sta usando l'app -->
+                        <div class="image-box container-flex">
+                            <img src="img/user-avatar2.png" alt="avatar">
+                            <h5>Matteo</h5>
+                        </div>
+                
+                        <!-- parte che mostra le icone nella parte alta -->
+                        <div class="icon-bar">
+                            <ul>
+                                <li>
+                                    <i class="fa-solid fa-circle-notch"></i>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-message"></i>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </li>
+                            </ul>
+                
+                        </div>
+                
+                    </div>
+                
+                    <!-- barra notifiche -->
+                    <div class="notification container-flex">
+                
+                        <!-- icona della campanella -->
+                        <div class="circle">
+                            <i class="fa-solid fa-bell-slash"></i>
+                        </div>
+                
+                        <!-- testi -->
+                        <div class="box-text">
+                            <h5>Ricevi notifiche di nuovi messaggi</h5>
+                            <small class="text-notification">
+                                <a href="#">Attiva notifiche desktop</a>
+                            </small>
+                        </div>
+                
+                    </div>
+                
+                    <!-- barra di ricerca per filtrare i profili -->
+                    <div class="search-bar">
+                        <i class="fa fa-search"></i>
+                        <input id="search" type="text" placeholder="Cerca un contatto" v-model="searchQuery"
+                            @keyup.enter="filteredUser">
+                    </div>
+                
+                    <!-- box che ospita la lista dei contatti -->
+                    <div class="list-contacts">
+                
+                        <!-- lista dei contatti -->
+                        <ul class="contact">
+                            <li v-for="(item, index) in filteredUser" :key="index" @click="selectContact(index)"
+                                :class="{active : index === currentIndex}">
+                
+                                <!-- immagine avatar -->
+                                <div class="box-contact">
+                                    <img :src="item.avatar" :alt="item.name">
+                                </div>
+                
+                                <!-- testi contatti -->
+                                <div class="box-text">
+                                    <div class="container-between">
+                                        <h5>{{ item.name }}</h5>
+                                        <small>{{ formatTime(item.lastMessageTime) }}</small>
+                                    </div>
+                                    <small class="text-sent">
+                                        {{ item.messages[item.messages.length - 1].message }}
+                                    </small>
+                                </div>
+                
+                            </li>
+                        </ul>
+                
+                    </div>
+                
+                </div>
+
+
                 <!-- corpo principale scrollabile -->
-                <div id="body-app">
+                <div id="body-app-responsive" v-if="showChat">
 
                     <!-- barra in alto -->
                     <div class="bar container-between">
@@ -132,6 +216,7 @@
                         <!-- parte che mostra il contatto in alto -->
                         <div class="container-flex">
 
+                            <i class="fa-solid fa-arrow-left" @click="showChat = false"></i>
                             <!-- immagine del contatto corrente -->
                             <div class="image-box">
                                 <img :src="listContacts[currentIndex].avatar" :alt="listContacts[currentIndex].name">
@@ -168,7 +253,7 @@
                     </div>
 
                     <!-- contenitore messaggi -->
-                    <div id="box-message">
+                    <div class="box-message">
 
                         <!-- messaggi -->
                         <div v-for="(text, index) in listContacts[currentIndex].messages" :key="index" 
@@ -197,7 +282,7 @@
                         <i class="fa-regular fa-face-smile"></i>
 
                         <!-- input per scrivere i messaggi da inviare -->
-                        <div id="message-bar">
+                        <div class="message-bar">
                             <input type="text" @input="handleTyping" @keypress.enter="addMessage" placeholder="Scrivi un messaggio" v-model="userMessage" @keyup.enter="addMessage">
                         </div>
 
@@ -206,6 +291,95 @@
 
                     </div>
                 </div>
+
+                
+
+                <div id="body-app" v-else>
+                
+                    <!-- barra in alto -->
+                    <div class="bar container-between">
+                
+                        <!-- parte che mostra il contatto in alto -->
+                        <div class="container-flex">
+                
+                            <!-- immagine del contatto corrente -->
+                            <div class="image-box">
+                                <img :src="listContacts[currentIndex].avatar" :alt="listContacts[currentIndex].name">
+                
+                            </div>
+                
+                            <!-- testi del contatto corrente -->
+                            <div class="box-text">
+                                <h5> {{ listContacts[currentIndex].name}} </h5>
+                                <small v-if="onlineStatus()" class="status-online">online</small>
+                                <small v-else-if="autoReplyTyping" class="writing">
+                                    Sta scrivendo...
+                                </small>
+                                <small v-else class="text-sent">Ultimo accesso alle {{
+                                    formatTime(listContacts[currentIndex].lastMessageTime) }}</small>
+                            </div>
+                
+                        </div>
+                
+                        <!-- parte che comprende le icone nella parte in alto -->
+                        <div class="icon-bar">
+                            <ul>
+                                <li>
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-paperclip"></i>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </li>
+                            </ul>
+                
+                        </div>
+                    </div>
+                
+                    <!-- contenitore messaggi -->
+                    <div class="box-message">
+                
+                        <!-- messaggi -->
+                        <div v-for="(text, index) in listContacts[currentIndex].messages" :key="index"
+                            :class="text.status === 'sent' ? 'sent' : 'received'">
+                
+                            <!-- tipo di messaggio -->
+                            <div class="message" :class="text.status === 'sent' ? 'dropdown message-green' : 'message-white' "
+                                @click="toggleDropdown(index)">
+                                <div class="dropdown-menu" :class="{ 'active-dropdown': dropdownIndex === index }">
+                                    <ul>
+                                        <li>Message info</li>
+                                        <li @click="deleteMessage(index, text.status)">Delete message</li>
+                                    </ul>
+                                </div>
+                                <p class="text-message">{{ text.message }}</p>
+                                <p class="text-date"> {{ formatTime(text.date) }} </p>
+                            </div>
+                
+                        </div>
+                
+                    </div>
+                
+                    <!-- barra in basso -->
+                    <div class="bar container-between">
+                
+                        <!-- smile -->
+                        <i class="fa-regular fa-face-smile"></i>
+                
+                        <!-- input per scrivere i messaggi da inviare -->
+                        <div class="message-bar">
+                            <input type="text" @input="handleTyping" @keypress.enter="addMessage" placeholder="Scrivi un messaggio"
+                                v-model="userMessage" @keyup.enter="addMessage">
+                        </div>
+                
+                        <!-- microfono -->
+                        <i :class="['fa-solid', inputIcon]" @click="addMessage"></i>
+                
+                    </div>
+                </div>
+
 
             </div>
 

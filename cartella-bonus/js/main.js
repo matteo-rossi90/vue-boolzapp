@@ -37,7 +37,9 @@ createApp({
             isWriting: false, //per monitorare se l'utente sta scrivendo
             writingTimer: null, //timer per il monitoraggio della scrittura
             pendingMessageTime: null, //nuova variabile per memorizzare temporaneamente il timestamp del messaggio
-            currentIndex: 0,//indice del contatto considerato in quel momento che va aggiornato in base al contatto di riferimento
+            currentIndex: 0,//indice del contatto considerato in quel momento che va aggiornato in base al contatto di riferimento,
+            showChat: false, //per mostrare/nascondere il box messaggi in responsive a tutto schermo
+            showSidenav: true, //per mostrare/nasconadere la barra laterale con i contatti
             listContacts: [//lista dei contatti
                 {
                     name: 'Michele',
@@ -218,6 +220,8 @@ createApp({
         selectContact(index){
             const selectedContact = this.filteredUser[index];
             this.currentIndex = this.listContacts.findIndex(contact => contact.name === selectedContact.name);
+            this.showChat = true
+            this.showSidenav = false
         },
         //aggiungere il messaggio scritto dall'utente
         addMessage(){

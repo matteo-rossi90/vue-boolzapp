@@ -91,9 +91,13 @@ i{
 
 /* PARTE LATERALE */
 /* barra laterale */
-#sidebar {
+#sidebar{
     height: 100%;
     width: 400px;
+}
+
+#sidebar,
+#sidebar-responsive{
     background-color: #FFFFFF;
     border: 1px solid gainsboro;
 }
@@ -111,14 +115,14 @@ i{
 }
 
 /* box ricevi notifiche */
-#notification {
+.notification {
     height: 60px;
     background-color: #8EDAFC;
 }
 
 .circle {
-    height: 40px;
-    width: 40px;
+    min-height: 40px;
+    min-width: 40px;
     border-radius: 100%;
     background-color: white;
     margin: 0 10px;
@@ -135,7 +139,7 @@ i{
 
 /* barra di ricerca per il filtro nella barra laterale */
 
-#search-bar {
+.search-bar {
     background-color: #EAEAEA;
     height: 40px;
     padding: 5px;
@@ -143,7 +147,7 @@ i{
     align-items: center;
 }
 
-#search-bar input {
+.search-bar input {
     flex: 1;
     padding: 5px 35px;
     border: 1px solid #ccc;
@@ -160,7 +164,7 @@ i{
 }
 
 /* box contatti */
-#list-contacts {
+.list-contacts {
     height: calc(100% - 150px);
     overflow-y: auto;
 }
@@ -211,13 +215,21 @@ i{
 #body-app {
     height: 100%;
     width: calc(100% - 400px);
+}
+
+#body-app,
+#body-app-responsive{
     background-image: url('../img/background_chat.png');
     background-size: 60%;
     flex-shrink: 0;
 }
 
+.fa-arrow-left{
+    display:none;
+}
+
 /* box dei messaggi */
-#box-message {
+.box-message {
     height: calc(100% - 100px);
     width: 100%;
     overflow-y: auto;
@@ -231,7 +243,7 @@ i{
 }
 
 /* messaggi ricevuti e inviati */
-#box-message > div{
+.box-message > div{
     font-size: 12px;
 }
 
@@ -326,12 +338,12 @@ i{
 }
 
 /* barra in basso */
-#message-bar {
+.message-bar {
     flex: 1;
     padding: 0 10px;
 }
 
-#message-bar input {
+.message-bar input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -354,25 +366,79 @@ i{
     font-size: 15px;
 }
 
+/* RESPONSIVE */
+
+/* Desktop */
+
+@media (min-width: 901px ){
+    #sidebar,
+    #sidebar-responsive{
+        width: 35%;
+    }
+
+    #body-app,
+    #body-app-responsive{
+        width: 65%
+    }
+}
+
 @media (max-width: 900px){
     #sidebar,
-    #body-app {
+    #sidebar-responsive,
+    #body-app,
+    #body-app-responsive {
         width: 50%;
     }
 }
 
 @media (max-width: 800px){
     #bool-application{
+        min-height: 100vh;
         width:100%;
     }
 }
 
 @media (max-width: 625px){
     #sidebar{
-        width: 100%;
+        display:none
     }
-    
+
     #body-app{
         display: none;
+    }
+
+    #sidebar-responsive{
+        height: 100%;
+        width: 100%;
+    }
+
+    #body-app-responsive{
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 1050;
+        transition: transform 0.3s ease-in-out;
+    
+    }
+
+    #body-app-responsive.show{
+        transform: translateX(100%);
+    }
+
+    .image-box{
+        display: flex;
+        width: 60px;
+        height: 100%;
+        
+    }
+
+    .image-box img{
+        min-width: 100%;
+    }
+
+    .fa-arrow-left{
+        display:block;
     }
 }
