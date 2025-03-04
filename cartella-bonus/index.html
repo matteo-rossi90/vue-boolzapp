@@ -47,7 +47,7 @@
                     <div class="bar container-between">
 
                         <!-- parte che mostra il profilo dell'utente di chi sta usando l'app -->
-                        <div class="image-box container-flex">
+                        <div class="sidenav-avatar container-flex">
                             <img src="img/user-avatar2.png" alt="avatar">
                             <h5>Matteo</h5>
                         </div>
@@ -123,11 +123,11 @@
                     </div>
                 </div>
 
-                <div id="sidebar-responsive" v-else>
+                <div id="sidebar" v-else>
                     <div class="bar container-between">
                 
                         <!-- parte che mostra il profilo dell'utente di chi sta usando l'app -->
-                        <div class="image-box container-flex">
+                        <div class="sidenav-avatar container-flex">
                             <img src="img/user-avatar2.png" alt="avatar">
                             <h5>Matteo</h5>
                         </div>
@@ -218,7 +218,7 @@
 
                             <i class="fa-solid fa-arrow-left" @click="showChat = false"></i>
                             <!-- immagine del contatto corrente -->
-                            <div class="image-box">
+                            <div class="image-box-bar">
                                 <img :src="listContacts[currentIndex].avatar" :alt="listContacts[currentIndex].name">
                             
                             </div>
