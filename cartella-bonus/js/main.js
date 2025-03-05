@@ -40,6 +40,7 @@ createApp({
             currentIndex: 0,//indice del contatto considerato in quel momento che va aggiornato in base al contatto di riferimento,
             showChat: false, //per mostrare/nascondere il box messaggi in responsive a tutto schermo
             showSidenav: true, //per mostrare/nasconadere la barra laterale con i contatti
+            deletedMessage: false,
             listContacts: [//lista dei contatti
                 {
                     name: 'Michele',
@@ -307,13 +308,29 @@ createApp({
             
         },
         //attivazione del menu a tendina cliccando sull'icona nel messaggio
-        toggleDropdown(index) {
-            this.dropdownIndex = this.dropdownIndex === index ? null : index;
+        toggleDropdown(index, status) {
+
+            const message = this.listContacts[this.currentIndex].messages[index];
+
+            //attiva il dropdown se il messaggio è inviato dall'utente e se non è stato cancellato
+            if(status === 'sent' && !message.deleted  ){
+                this.dropdownIndex = this.dropdownIndex === index ? null : index;
+            }
+            
         },
         //cancella il messaggio dal menu a tendina
         deleteMessage(index, status){
+
+            //cancella il messaggio solo se il messaggio è inviato dall'utente
             if(status === 'sent'){
-                this.listContacts[this.currentIndex].messages.splice(index, 1);
+                //this.listContacts[this.currentIndex].messages.splice(index, 1);
+                this.listContacts[this.currentIndex].messages[index].message = "Questo messaggio è stato cancellato"; //testo che si sostituisce al messaggio cancellato
+                this.listContacts[this.currentIndex].messages[index].deleted = true; //proprietà aggiunta per capire se il messaggio è stato cancellato dall'utente
+            }
+
+            //disabilita il dropdown menu dopo la rimozione del testo del messaggio
+            if (this.dropdownIndex === index) {
+                this.dropdownIndex = null;
             }
         
         },

@@ -257,10 +257,10 @@
 
                         <!-- messaggi -->
                         <div v-for="(text, index) in listContacts[currentIndex].messages" :key="index" 
-                        :class="text.status === 'sent' ? 'sent' : 'received'">
+                        :class="['message', text.status, { 'deleted': text.deleted }]">
 
                             <!-- tipo di messaggio -->
-                            <div class="message" :class="text.status === 'sent' ? 'dropdown message-green' : 'message-white' " @click="toggleDropdown(index)">
+                            <div class="message" :class="text.status === 'sent' ? 'dropdown message-green' : 'message-white' " @click="toggleDropdown(index, text.status)">
                                 <div class="dropdown-menu" :class="{ 'active-dropdown': dropdownIndex === index }">
                                     <ul>
                                         <li>Message info</li>
@@ -269,6 +269,7 @@
                                 </div>
                                 <p class="text-message">{{ text.message }}</p>
                                 <p class="text-date"> {{ formatTime(text.date) }} </p>
+                                
                             </div>
 
                         </div>
@@ -343,11 +344,11 @@
                 
                         <!-- messaggi -->
                         <div v-for="(text, index) in listContacts[currentIndex].messages" :key="index"
-                            :class="text.status === 'sent' ? 'sent' : 'received'">
+                            :class="['message', text.status, { 'deleted': text.deleted }]">
                 
                             <!-- tipo di messaggio -->
                             <div class="message" :class="text.status === 'sent' ? 'dropdown message-green' : 'message-white' "
-                                @click="toggleDropdown(index)">
+                                @click="toggleDropdown(index, text.status)">
                                 <div class="dropdown-menu" :class="{ 'active-dropdown': dropdownIndex === index }">
                                     <ul>
                                         <li>Message info</li>

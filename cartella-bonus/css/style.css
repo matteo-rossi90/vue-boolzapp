@@ -343,6 +343,10 @@ i{
     display: inline-block;
 }
 
+.disable-dropdown{
+    display: none;
+}
+
 .dropdown-menu li:hover{
     background-color:rgb(238, 238, 238);
 }
@@ -376,11 +380,17 @@ i{
     font-size: 15px;
 }
 
+.deleted {
+    font-style: italic;
+    color: gray;
+}
+
 /* RESPONSIVE */
 
 /* Desktop */
 
 @media (min-width: 901px ){
+    
     #sidebar,
     #sidebar-responsive{
         width: 35%;
