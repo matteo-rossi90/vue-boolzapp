@@ -29,6 +29,7 @@ createApp({
     data(){
 
         return{
+            introMessage: true,
             searchQuery:'', //stringa vuota che permette di raccogliere il nome digitato dall'utente
             userMessage: '', // stringa vuota che raccoglie i messaggi digitati dall'utente
             dropdownIndex: null, //variabile per gestire il menu a tendina dei messaggi inviati
@@ -222,6 +223,8 @@ createApp({
             this.currentIndex = this.listContacts.findIndex(contact => contact.name === selectedContact.name);
             this.showChat = true
             this.showSidenav = false
+
+            this.introMessage = false;
         },
         //aggiungere il messaggio scritto dall'utente
         addMessage(){

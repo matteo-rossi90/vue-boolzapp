@@ -13,3 +13,5 @@ Per creare questa applicazione ho seguito alcuni step:
 3) ho gestito i messaggi e distinzione delle tonalità in base alla proprietà status contenuta nell'array stabilendo una condizione
 4) con javaScript ho fatto in modo di mostrare per ciascun contatto i messaggi che l'utente ha scambiato con quel contatto specifico creando un metodo che tiene conto del numero di posizione del contatto espresso con un numero indice
 5) ho gestito l'invio messaggi da parte dell'utente sfruttando la direttiva v-model e creando una variabile in cui salvare il messaggio inviato e regolando degli intervalli di tempo specifici per avviare e disattivare la simulazione dello stato online e della scrittura dell'utente
+6) ho abilitato la barra di ricerca nel pannello dei contatti per il filtraggio sfruttando il computed
+7) ho reso l'applicazione responsive sia per tablet che per dispositivi mobile; in questo caso ho fatto in modo di visualizzare di default il pannello dei contatti, ma al click del contatto si visualizza a tutto schermo l'area di conversazione

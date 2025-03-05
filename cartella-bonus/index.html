@@ -210,175 +210,200 @@
                 <!-- corpo principale scrollabile -->
                 <div id="body-app-responsive" v-if="showChat">
 
-                    <!-- barra in alto -->
-                    <div class="bar container-between">
-
-                        <!-- parte che mostra il contatto in alto -->
-                        <div class="container-flex">
-
-                            <i class="fa-solid fa-arrow-left" @click="showChat = false"></i>
-                            <!-- immagine del contatto corrente -->
-                            <div class="image-box-bar">
-                                <img :src="listContacts[currentIndex].avatar" :alt="listContacts[currentIndex].name">
-                            
-                            </div>
-
-                            <!-- testi del contatto corrente -->
-                            <div class="box-text">
-                                <h5> {{ listContacts[currentIndex].name}} </h5>
-                                <small v-if="onlineStatus()" class="status-online">online</small>
-                                <small v-else-if="autoReplyTyping" class="writing">
-                                    Sta scrivendo...
-                                </small>
-                                <small v-else class="text-sent">Ultimo accesso alle {{ formatTime(listContacts[currentIndex].lastMessageTime) }}</small>
-                            </div>
-
+                    <div v-if="introMessage" class="intro-message">
+                        <div class="intro-message-box">
+                            <img src="" alt="">
+                            <p>Clicca un contatto per vedere i messaggi.</p>
                         </div>
-
-                        <!-- parte che comprende le icone nella parte in alto -->
-                        <div class="icon-bar">
-                            <ul>
-                                <li>
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </li>
-                                <li>
-                                    <i class="fa-solid fa-paperclip"></i>
-                                </li>
-                                <li>
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </li>
-                            </ul>
+                    </div>
+                    <div class="container-messages" v-else>
+                        <!-- barra in alto -->
+                        <div class="bar container-between">
+                        
+                            <!-- parte che mostra il contatto in alto -->
+                            <div class="container-flex">
+                        
+                                <i class="fa-solid fa-arrow-left" @click="showChat = false"></i>
+                                <!-- immagine del contatto corrente -->
+                                <div class="image-box-bar">
+                                    <img :src="listContacts[currentIndex].avatar" :alt="listContacts[currentIndex].name">
+                        
+                                </div>
+                        
+                                <!-- testi del contatto corrente -->
+                                <div class="box-text">
+                                    <h5> {{ listContacts[currentIndex].name}} </h5>
+                                    <small v-if="onlineStatus()" class="status-online">online</small>
+                                    <small v-else-if="autoReplyTyping" class="writing">
+                                        Sta scrivendo...
+                                    </small>
+                                    <small v-else class="text-sent">Ultimo accesso alle {{
+                                        formatTime(listContacts[currentIndex].lastMessageTime) }}</small>
+                                </div>
+                        
+                            </div>
+                        
+                            <!-- parte che comprende le icone nella parte in alto -->
+                            <div class="icon-bar">
+                                <ul>
+                                    <li>
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-paperclip"></i>
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </li>
+                                </ul>
+                        
+                            </div>
+                        </div>
+                        
+                        <!-- contenitore messaggi -->
+                        <div class="box-message">
+                        
+                            <!-- messaggi -->
+                            <div v-for="(text, index) in listContacts[currentIndex].messages" :key="index"
+                                :class="['message', text.status, { 'deleted': text.deleted }]">
+                        
+                                <!-- tipo di messaggio -->
+                                <div class="message" :class="text.status === 'sent' ? 'dropdown message-green' : 'message-white' "
+                                    @click="toggleDropdown(index, text.status)">
+                                    <div class="dropdown-menu" :class="{ 'active-dropdown': dropdownIndex === index }">
+                                        <ul>
+                                            <li>Message info</li>
+                                            <li @click="deleteMessage(index, text.status)">Delete message</li>
+                                        </ul>
+                                    </div>
+                                    <p class="text-message">{{ text.message }}</p>
+                                    <p class="text-date"> {{ formatTime(text.date) }} </p>
+                        
+                                </div>
+                        
+                            </div>
+                        
+                            
                         
                         </div>
-                    </div>
 
-                    <!-- contenitore messaggi -->
-                    <div class="box-message">
-
-                        <!-- messaggi -->
-                        <div v-for="(text, index) in listContacts[currentIndex].messages" :key="index" 
-                        :class="['message', text.status, { 'deleted': text.deleted }]">
-
-                            <!-- tipo di messaggio -->
-                            <div class="message" :class="text.status === 'sent' ? 'dropdown message-green' : 'message-white' " @click="toggleDropdown(index, text.status)">
-                                <div class="dropdown-menu" :class="{ 'active-dropdown': dropdownIndex === index }">
-                                    <ul>
-                                        <li>Message info</li>
-                                        <li @click="deleteMessage(index, text.status)">Delete message</li>
-                                    </ul>
-                                </div>
-                                <p class="text-message">{{ text.message }}</p>
-                                <p class="text-date"> {{ formatTime(text.date) }} </p>
-                                
+                        <!-- barra in basso -->
+                        <div class="bar container-between">
+                        
+                            <!-- smile -->
+                            <i class="fa-regular fa-face-smile"></i>
+                        
+                            <!-- input per scrivere i messaggi da inviare -->
+                            <div class="message-bar">
+                                <input type="text" @input="handleTyping" @keypress.enter="addMessage" placeholder="Scrivi un messaggio"
+                                    v-model="userMessage" @keyup.enter="addMessage">
                             </div>
-
+                        
+                            <!-- microfono -->
+                            <i :class="['fa-solid', inputIcon]" @click="addMessage"></i>
+                        
                         </div>
+
 
                     </div>
 
-                    <!-- barra in basso -->
-                    <div class="bar container-between">
-
-                        <!-- smile -->
-                        <i class="fa-regular fa-face-smile"></i>
-
-                        <!-- input per scrivere i messaggi da inviare -->
-                        <div class="message-bar">
-                            <input type="text" @input="handleTyping" @keypress.enter="addMessage" placeholder="Scrivi un messaggio" v-model="userMessage" @keyup.enter="addMessage">
-                        </div>
-
-                        <!-- microfono -->
-                        <i :class="['fa-solid', inputIcon]" @click="addMessage" ></i>
-
-                    </div>
                 </div>
 
-                
-
                 <div id="body-app" v-else>
-                
-                    <!-- barra in alto -->
-                    <div class="bar container-between">
-                
-                        <!-- parte che mostra il contatto in alto -->
-                        <div class="container-flex">
-                
-                            <!-- immagine del contatto corrente -->
-                            <div class="image-box">
-                                <img :src="listContacts[currentIndex].avatar" :alt="listContacts[currentIndex].name">
-                
-                            </div>
-                
-                            <!-- testi del contatto corrente -->
-                            <div class="box-text">
-                                <h5> {{ listContacts[currentIndex].name}} </h5>
-                                <small v-if="onlineStatus()" class="status-online">online</small>
-                                <small v-else-if="autoReplyTyping" class="writing">
-                                    Sta scrivendo...
-                                </small>
-                                <small v-else class="text-sent">Ultimo accesso alle {{
-                                    formatTime(listContacts[currentIndex].lastMessageTime) }}</small>
-                            </div>
-                
-                        </div>
-                
-                        <!-- parte che comprende le icone nella parte in alto -->
-                        <div class="icon-bar">
-                            <ul>
-                                <li>
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </li>
-                                <li>
-                                    <i class="fa-solid fa-paperclip"></i>
-                                </li>
-                                <li>
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </li>
-                            </ul>
-                
+
+                    <div v-if="introMessage" class="intro-message">
+                        <div class="intro-message-box">
+                            <i class="fa-regular fa-comments"></i>
+                            <p>Clicca un contatto per vedere i messaggi.</p>
                         </div>
                     </div>
-                
-                    <!-- contenitore messaggi -->
-                    <div class="box-message">
-                
-                        <!-- messaggi -->
-                        <div v-for="(text, index) in listContacts[currentIndex].messages" :key="index"
-                            :class="['message', text.status, { 'deleted': text.deleted }]">
-                
-                            <!-- tipo di messaggio -->
-                            <div class="message" :class="text.status === 'sent' ? 'dropdown message-green' : 'message-white' "
-                                @click="toggleDropdown(index, text.status)">
-                                <div class="dropdown-menu" :class="{ 'active-dropdown': dropdownIndex === index }">
-                                    <ul>
-                                        <li>Message info</li>
-                                        <li @click="deleteMessage(index, text.status)">Delete message</li>
-                                    </ul>
+                    <div class="container-messages" v-else>
+
+                        <!-- barra in alto -->
+                        <div class="bar container-between">
+                        
+                            <!-- parte che mostra il contatto in alto -->
+                            <div class="container-flex">
+                        
+                                <!-- immagine del contatto corrente -->
+                                <div class="image-box">
+                                    <img :src="listContacts[currentIndex].avatar" :alt="listContacts[currentIndex].name">
+                        
                                 </div>
-                                <p class="text-message">{{ text.message }}</p>
-                                <p class="text-date"> {{ formatTime(text.date) }} </p>
+                        
+                                <!-- testi del contatto corrente -->
+                                <div class="box-text">
+                                    <h5> {{ listContacts[currentIndex].name}} </h5>
+                                    <small v-if="onlineStatus()" class="status-online">online</small>
+                                    <small v-else-if="autoReplyTyping" class="writing">
+                                        Sta scrivendo...
+                                    </small>
+                                    <small v-else class="text-sent">Ultimo accesso alle {{
+                                        formatTime(listContacts[currentIndex].lastMessageTime) }}</small>
+                                </div>
+                        
                             </div>
-                
+                        
+                            <!-- parte che comprende le icone nella parte in alto -->
+                            <div class="icon-bar">
+                                <ul>
+                                    <li>
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-paperclip"></i>
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </li>
+                                </ul>
+                        
+                            </div>
                         </div>
-                
+                        
+                        <!-- contenitore messaggi -->
+                        <div class="box-message">
+                        
+                            <!-- messaggi -->
+                            <div v-for="(text, index) in listContacts[currentIndex].messages" :key="index"
+                                :class="['message', text.status, { 'deleted': text.deleted }]">
+                        
+                                <!-- tipo di messaggio -->
+                                <div class="message" :class="text.status === 'sent' ? 'dropdown message-green' : 'message-white' "
+                                    @click="toggleDropdown(index, text.status)">
+                                    <div class="dropdown-menu" :class="{ 'active-dropdown': dropdownIndex === index }">
+                                        <ul>
+                                            <li>Message info</li>
+                                            <li @click="deleteMessage(index, text.status)">Delete message</li>
+                                        </ul>
+                                    </div>
+                                    <p class="text-message">{{ text.message }}</p>
+                                    <p class="text-date"> {{ formatTime(text.date) }} </p>
+                                </div>
+                        
+                            </div>
+                        
+                        </div>
+                        
+                        <!-- barra in basso -->
+                        <div class="bar container-between">
+                        
+                            <!-- smile -->
+                            <i class="fa-regular fa-face-smile"></i>
+                        
+                            <!-- input per scrivere i messaggi da inviare -->
+                            <div class="message-bar">
+                                <input type="text" @input="handleTyping" @keypress.enter="addMessage" placeholder="Scrivi un messaggio"
+                                    v-model="userMessage" @keyup.enter="addMessage">
+                            </div>
+                        
+                            <!-- microfono -->
+                            <i :class="['fa-solid', inputIcon]" @click="addMessage"></i>
+                        
+                        </div>
+
                     </div>
                 
-                    <!-- barra in basso -->
-                    <div class="bar container-between">
-                
-                        <!-- smile -->
-                        <i class="fa-regular fa-face-smile"></i>
-                
-                        <!-- input per scrivere i messaggi da inviare -->
-                        <div class="message-bar">
-                            <input type="text" @input="handleTyping" @keypress.enter="addMessage" placeholder="Scrivi un messaggio"
-                                v-model="userMessage" @keyup.enter="addMessage">
-                        </div>
-                
-                        <!-- microfono -->
-                        <i :class="['fa-solid', inputIcon]" @click="addMessage"></i>
-                
-                    </div>
                 </div>
 
 
