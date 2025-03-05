@@ -40,7 +40,6 @@ createApp({
             currentIndex: 0,//indice del contatto considerato in quel momento che va aggiornato in base al contatto di riferimento,
             showChat: false, //per mostrare/nascondere il box messaggi in responsive a tutto schermo
             showSidenav: true, //per mostrare/nasconadere la barra laterale con i contatti
-            deletedMessage: false,
             listContacts: [//lista dei contatti
                 {
                     name: 'Michele',
@@ -248,7 +247,7 @@ createApp({
                 //impostazione di default
                 this.isWriting = false;
 
-                //visualizzare lo stato online dopo 4 secondi
+                //visualizzare lo stato online dopo 3 secondi
                 setTimeout(() =>{
                     this.online = true;
                 }, 3000);

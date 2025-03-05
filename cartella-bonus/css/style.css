@@ -343,10 +343,6 @@ i{
     display: inline-block;
 }
 
-.disable-dropdown{
-    display: none;
-}
-
 .dropdown-menu li:hover{
     background-color:rgb(238, 238, 238);
 }
