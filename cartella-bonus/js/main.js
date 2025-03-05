@@ -29,7 +29,7 @@ createApp({
     data(){
 
         return{
-            introMessage: true,
+            introMessage: true, //gestione del messaggio introduttivo prima di attivare l'area di conversazione
             searchQuery:'', //stringa vuota che permette di raccogliere il nome digitato dall'utente
             userMessage: '', // stringa vuota che raccoglie i messaggi digitati dall'utente
             dropdownIndex: null, //variabile per gestire il menu a tendina dei messaggi inviati

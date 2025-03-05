@@ -335,7 +335,7 @@ i{
 
 /* dropdown dei messaggi */
 
-.dropdown:after {
+.dropdown::after {
     content: "\2728";
     position: absolute;
     top: 0;
@@ -375,10 +375,15 @@ i{
     background-color:rgb(238, 238, 238);
 }
 
+.manage-content{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
 /* barra in basso */
 .message-bar {
     flex: 1;
-    padding: 0 10px;
 }
 
 .message-bar input {
@@ -391,7 +396,7 @@ i{
 .fa-face-smile,
 .fa-microphone,
 .fa-paper-plane{
-    padding: 0 30px;
+    padding: 0 0.6rem;
     color: grey;
 }
 

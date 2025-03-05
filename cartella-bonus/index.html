@@ -99,7 +99,7 @@
 
                         <!-- lista dei contatti -->
                         <ul class="contact">
-                            <li v-for="(item, index) in filteredUser" :key="index" @click="selectContact(index)" :class="{active : index === currentIndex}">
+                            <li v-for="(item, index) in filteredUser" :key="index" @click="selectContact(index)" :class="{active : index === currentIndex && !introMessage}">
                                 
                                 <!-- immagine avatar -->
                                 <div class="box-contact">
@@ -181,7 +181,7 @@
                         <!-- lista dei contatti -->
                         <ul class="contact">
                             <li v-for="(item, index) in filteredUser" :key="index" @click="selectContact(index)"
-                                :class="{active : index === currentIndex}">
+                                :class="{active : index === currentIndex && !intromessage}">
                 
                                 <!-- immagine avatar -->
                                 <div class="box-contact">
@@ -276,7 +276,13 @@
                                             <li @click="deleteMessage(index, text.status)">Delete message</li>
                                         </ul>
                                     </div>
-                                    <p class="text-message">{{ text.message }}</p>
+                                    <div class="manage-content" v-if="text.deleted">
+                                        <i class="fas fa-ban"></i>
+                                        <p class="text-message">{{ text.message }}</p>
+                                    </div>
+                                    <div v-else>
+                                        <p class="text-message">{{ text.message }}</p>
+                                    </div>
                                     <p class="text-date"> {{ formatTime(text.date) }} </p>
                         
                                 </div>
