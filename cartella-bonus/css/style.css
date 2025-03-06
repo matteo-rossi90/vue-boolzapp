@@ -253,6 +253,7 @@ i{
 .intro-message-box{
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
 
 .fa-comments{
@@ -434,11 +435,18 @@ i{
 /* laptop piccolo */
 @media (max-width: 900px){
 
+    #bool-application{
+        width: 90%;
+    }
+
     #sidebar,
-    #sidebar-responsive,
+    #sidebar-responsive{
+        width: 45%
+    }
+
     #body-app,
     #body-app-responsive {
-        width: 50%;
+        width: 55%;
     }
 }
 
@@ -453,6 +461,13 @@ i{
     #bool-application{
         min-height: 100vh;
         width:100%;
+    }
+}
+
+@media (max-width: 769px){
+
+    .intro-message-box p{
+        font-size: 12px;
     }
 }
 

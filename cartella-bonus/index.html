@@ -212,8 +212,8 @@
 
                     <div v-if="introMessage" class="intro-message">
                         <div class="intro-message-box">
-                            <img src="" alt="">
-                            <p>Clicca un contatto per vedere i messaggi.</p>
+                            <i class="fa-regular fa-comments"></i>
+                            <p>Clicca un contatto per iniziare una conversazione</p>
                         </div>
                     </div>
                     <div class="container-messages" v-else>
@@ -272,8 +272,8 @@
                                     @click="toggleDropdown(index, text.status)">
                                     <div class="dropdown-menu" :class="{ 'active-dropdown': dropdownIndex === index }">
                                         <ul>
-                                            <li>Message info</li>
-                                            <li @click="deleteMessage(index, text.status)">Delete message</li>
+                                            <li>Informazioni</li>
+                                            <li @click="deleteMessage(index, text.status)">Elimina</li>
                                         </ul>
                                     </div>
                                     <div class="manage-content" v-if="text.deleted">
@@ -320,7 +320,7 @@
                     <div v-if="introMessage" class="intro-message">
                         <div class="intro-message-box">
                             <i class="fa-regular fa-comments"></i>
-                            <p>Clicca un contatto per vedere i messaggi.</p>
+                            <p>Clicca un contatto per iniziare una conversazione</p>
                         </div>
                     </div>
                     <div class="container-messages" v-else>
@@ -379,8 +379,8 @@
                                     @click="toggleDropdown(index, text.status)">
                                     <div class="dropdown-menu" :class="{ 'active-dropdown': dropdownIndex === index }">
                                         <ul>
-                                            <li>Message info</li>
-                                            <li @click="deleteMessage(index, text.status)">Delete message</li>
+                                            <li>Informazioni</li>
+                                            <li @click="deleteMessage(index, text.status)">Elimina</li>
                                         </ul>
                                     </div>
                                     <p class="text-message">{{ text.message }}</p>
