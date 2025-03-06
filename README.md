@@ -1,6 +1,6 @@
 **Boolzapp** 
 
-**Link disponibile qui**: https://vue-boolzapp-application.netlify.app/
+![Boolzapp](https://github.com/user-attachments/assets/eb731d74-42de-4be0-ae30-8d49ca222342)
 
 Progetto realizzato con l'intento di replicare un'applicazione simile per template e funzionalità a WhattSapp. 
 Realizzata interamente con Vue.js e JavaScript, l'applicazione è formata da una barra laterale dove l'utente può scorrere la lista dei contatti e cercare, attraverso un filtro di ricerca posto in alto, i contatti
