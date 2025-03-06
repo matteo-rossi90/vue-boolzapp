@@ -1,5 +1,7 @@
 **Boolzapp** 
 
+**Link disponibile qui**: https://vue-boolzapp-application.netlify.app/
+
 ![Boolzapp](https://github.com/user-attachments/assets/eb731d74-42de-4be0-ae30-8d49ca222342)
 
 Progetto realizzato con l'intento di replicare un'applicazione simile per template e funzionalità a WhattSapp. 
